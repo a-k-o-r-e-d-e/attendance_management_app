@@ -66,7 +66,7 @@ class OnboardingScreen extends ConsumerWidget {
                         OnBoardingPage(
                           index: 1,
                           description:
-                              'Effortlessly manage attendance with our intuitive app.',
+                          'Effortlessly manage attendance with our intuitive app.',
                         ),
                         OnBoardingPage(
                           index: 2,
@@ -75,7 +75,7 @@ class OnboardingScreen extends ConsumerWidget {
                         OnBoardingPage(
                           index: 3,
                           description:
-                              'No more classroom roll calls. Attendance, just a tap away.',
+                          'No more classroom roll calls. Attendance, just a tap away.',
                         ),
                       ],
                     ),
@@ -87,20 +87,20 @@ class OnboardingScreen extends ConsumerWidget {
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemBuilder: (context, index) => AnimatedContainer(
-                                duration: const Duration(milliseconds: 150),
-                                height: 6.0,
-                                width: pageIndex == index ? 30.0 : 15,
-                                decoration: BoxDecoration(
-                                  color: pageIndex == index
-                                      ? AppColors.appGreyDark
-                                      : AppColors.appGrey,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                ),
-                              ),
+                            duration: const Duration(milliseconds: 150),
+                            height: 6.0,
+                            width: pageIndex == index ? 30.0 : 15,
+                            decoration: BoxDecoration(
+                              color: pageIndex == index
+                                  ? AppColors.appGreyDark
+                                  : AppColors.appGrey,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                          ),
                           separatorBuilder: (ctx, idx) => const SizedBox(
-                                width: 4,
-                              ),
+                            width: 4,
+                          ),
                           itemCount: 3),
                     ),
                   ),
