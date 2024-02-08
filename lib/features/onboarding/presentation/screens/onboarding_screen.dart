@@ -1,12 +1,12 @@
 import 'package:attendance_management_app/features/onboarding/presentation/providers/onboarding_provider.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../../shared/routes/app_route.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
-import '../../../../shared/widgets/custom_text.dart';
 import '../widgets/onboarding_page.dart';
 
 @RoutePage()
@@ -24,7 +24,11 @@ class OnboardingScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
         child: GeneralButton(
           buttonText: "Get started",
-          onPressed: () {},
+          onPressed: () {
+
+            //context.replaceRoute(const SelectUserTypeRoute());
+            context.router.replaceNamed("/select-user-type");
+          },
           height: 48,
         ),
       ),
@@ -66,7 +70,7 @@ class OnboardingScreen extends ConsumerWidget {
                         OnBoardingPage(
                           index: 1,
                           description:
-                          'Effortlessly manage attendance with our intuitive app.',
+                              'Effortlessly manage attendance with our intuitive app.',
                         ),
                         OnBoardingPage(
                           index: 2,
@@ -75,7 +79,7 @@ class OnboardingScreen extends ConsumerWidget {
                         OnBoardingPage(
                           index: 3,
                           description:
-                          'No more classroom roll calls. Attendance, just a tap away.',
+                              'No more classroom roll calls. Attendance, just a tap away.',
                         ),
                       ],
                     ),
@@ -87,20 +91,20 @@ class OnboardingScreen extends ConsumerWidget {
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemBuilder: (context, index) => AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            height: 6.0,
-                            width: pageIndex == index ? 30.0 : 15,
-                            decoration: BoxDecoration(
-                              color: pageIndex == index
-                                  ? AppColors.appGreyDark
-                                  : AppColors.appGrey,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(10)),
-                            ),
-                          ),
+                                duration: const Duration(milliseconds: 150),
+                                height: 6.0,
+                                width: pageIndex == index ? 30.0 : 15,
+                                decoration: BoxDecoration(
+                                  color: pageIndex == index
+                                      ? AppColors.appGreyDark
+                                      : AppColors.appGrey,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                ),
+                              ),
                           separatorBuilder: (ctx, idx) => const SizedBox(
-                            width: 4,
-                          ),
+                                width: 4,
+                              ),
                           itemCount: 3),
                     ),
                   ),
