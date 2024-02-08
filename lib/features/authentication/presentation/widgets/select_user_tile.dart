@@ -2,7 +2,7 @@ import "package:attendance_management_app/shared/utilities/app_colors.dart";
 import "package:flutter/material.dart";
 import "../../../../shared/utilities/size_utils.dart";
 import "../../../../shared/widgets/custom_text.dart";
-import "../providers/states/user_state.dart";
+import "../providers/states/user_type_state.dart";
 import "custom_checkbox.dart";
 
 class SelectUserTile extends StatelessWidget {
