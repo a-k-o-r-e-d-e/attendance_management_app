@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../utilities/app_colors.dart';
 import 'custom_text.dart';
@@ -8,6 +7,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? verticalPadding;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final bool? centerTitle;
+  final bool showBorder;
+  final bool? automaticallyImplyLeading;
   final void Function()? onPressed;
 
   const CustomAppBar(
@@ -16,7 +18,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.suffixIcon,
       this.onPressed,
       this.prefixIcon,
-      this.verticalPadding});
+      this.verticalPadding,
+      this.centerTitle,
+      this.automaticallyImplyLeading,
+      this.showBorder = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +30,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           EdgeInsets.symmetric(horizontal: 0, vertical: verticalPadding ?? 0),
       child: AppBar(
         scrolledUnderElevation: 0,
-        centerTitle: true,
+        centerTitle: centerTitle ?? true,
+        automaticallyImplyLeading: automaticallyImplyLeading ?? false,
         elevation: 0,
         backgroundColor: Colors.white,
+        bottom: showBorder
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(1.0),
+                child: Container(
+                  color: AppColors.appLight30,
+                  height: 1.0,
+                ),
+              )
+            : null,
         title: CustomText(
           title: title,
           size: 20,
           weight: FontWeight.w500,
-          color: AppColors.textBlack,
         ),
-        leading: prefixIcon ??
-            InkWell(
-                onTap: onPressed ??
-                    () {
-                      context.router.back();
-                    },
-                child: const Icon(Icons.arrow_back_ios_new)),
+        leading: prefixIcon,
         actions: [suffixIcon ?? const SizedBox()],
       ),
     );
