@@ -1,9 +1,9 @@
-import 'package:attendance_management_app/shared/routes/app_route.dart';
+import 'package:attendance_management_app/shared/providers/app_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(ProviderScope(
+  runApp(const ProviderScope(
     child: MyApp(),
   ));
 }
