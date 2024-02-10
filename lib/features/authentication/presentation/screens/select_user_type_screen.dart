@@ -34,9 +34,9 @@ class SelectUserTypeScreen extends ConsumerWidget {
                   GeneralButton(
                     buttonText: "Next",
                     onPressed: () {
-                      userType == UserType.none
-                          ? null
-                          : context.router.navigateNamed("/create-account");
+                      userType == UserType.lecturer
+                          ? context.router.navigateNamed("/create-account")
+                          : null;
                     },
                     buttonColor:
                         userType == UserType.none ? AppColors.appLight50 : null,
@@ -53,7 +53,7 @@ class SelectUserTypeScreen extends ConsumerWidget {
                       ),
                       horizontalSpace(16),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           context.router.navigateNamed("/login");
                         },
                         child: const CustomText(
