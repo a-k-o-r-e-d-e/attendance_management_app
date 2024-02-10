@@ -38,7 +38,7 @@ class CustomText extends StatelessWidget {
         style: GoogleFonts.inter(
             textStyle: TextStyle(
                 decoration: underline ?? TextDecoration.none,
-                color: color ?? AppColors.textBlack,
+                color: color ?? AppColors.appDark700,
                 fontSize: size,
                 fontWeight: weight ?? FontWeight.normal,
                 overflow: overflow ?? TextOverflow.ellipsis,

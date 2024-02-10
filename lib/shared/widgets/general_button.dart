@@ -45,7 +45,7 @@ class GeneralButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Ink(
-          height: height ?? 55,
+          height: height ?? 48,
           width: width ?? screenWidth(context),
           decoration: BoxDecoration(
             border: border,
