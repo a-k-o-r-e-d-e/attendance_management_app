@@ -1,3 +1,4 @@
+import 'package:attendance_management_app/shared/routes/app_route.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,13 @@ class LoginScreen extends ConsumerWidget {
     UserType userType = ref.watch(loginUserTypeProvider);
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: 'Log In',
+          prefixIcon: InkWell(
+              onTap: () {
+                context.router.back();
+              },
+              child: const Icon(Icons.arrow_back_ios_new)),
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -87,7 +93,7 @@ class LoginScreen extends ConsumerWidget {
                   onPressed: () {
                     userType == UserType.none
                         ? null
-                        : context.router.navigateNamed("/create-account");
+                        : context.router.replaceAll([const HomeRoute()]);
                   },
                   buttonColor:
                       userType == UserType.none ? AppColors.appLight50 : null,
@@ -105,7 +111,7 @@ class LoginScreen extends ConsumerWidget {
                     ),
                     horizontalSpace(16),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         context.router.replaceNamed("/create-account");
                       },
                       child: const CustomText(
