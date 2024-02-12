@@ -2,7 +2,7 @@ import 'package:attendance_management_app/shared/utilities/app_colors.dart';
 import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:attendance_management_app/shared/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import '../domain/model/upcoming_class_model.dart';
+import '../../domain/model/upcoming_class_model.dart';
 import 'package:intl/intl.dart';
 
 class UpcomingClassWidget extends StatelessWidget {
@@ -20,6 +20,7 @@ class UpcomingClassWidget extends StatelessWidget {
           border: Border.all(color: AppColors.appLight30),
           borderRadius: BorderRadius.circular(8)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
