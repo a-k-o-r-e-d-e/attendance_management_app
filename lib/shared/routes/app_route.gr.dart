@@ -15,10 +15,22 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ClassRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ClassScreen(),
+      );
+    },
     CreateAccountRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const CreateAccountScreen(),
+      );
+    },
+    CreateClassRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CreateClassScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -51,6 +63,20 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [ClassScreen]
+class ClassRoute extends PageRouteInfo<void> {
+  const ClassRoute({List<PageRouteInfo>? children})
+      : super(
+          ClassRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ClassRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CreateAccountScreen]
 class CreateAccountRoute extends PageRouteInfo<void> {
   const CreateAccountRoute({List<PageRouteInfo>? children})
@@ -60,6 +86,20 @@ class CreateAccountRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CreateAccountRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreateClassScreen]
+class CreateClassRoute extends PageRouteInfo<void> {
+  const CreateClassRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateClassRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateClassRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
