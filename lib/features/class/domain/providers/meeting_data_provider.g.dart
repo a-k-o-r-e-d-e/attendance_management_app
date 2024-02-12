@@ -6,12 +6,12 @@ part of 'meeting_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$meetingDataHash() => r'8b29e3ca6ce7224283f6b5d610dddf94b95bb3ac';
+String _$meetingDataHash() => r'9724c58ed8c221a07113b259dc96ccd4e579416d';
 
 /// See also [MeetingData].
 @ProviderFor(MeetingData)
-final meetingDataProvider =
-    AutoDisposeNotifierProvider<MeetingData, MeetingDataRepository>.internal(
+final meetingDataProvider = AutoDisposeNotifierProvider<MeetingData,
+    MeetingDataSourceRepository>.internal(
   MeetingData.new,
   name: r'meetingDataProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final meetingDataProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$MeetingData = AutoDisposeNotifier<MeetingDataRepository>;
+typedef _$MeetingData = AutoDisposeNotifier<MeetingDataSourceRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
