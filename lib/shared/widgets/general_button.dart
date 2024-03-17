@@ -10,6 +10,7 @@ class GeneralButton extends StatelessWidget {
   final Color? textColor;
   final Color? iconColor;
   final FontWeight? fontWeight;
+  final BorderSide? borderSide;
   final double? fontSize;
   final double? iconSize;
   final double? height;
@@ -22,25 +23,28 @@ class GeneralButton extends StatelessWidget {
 
   const GeneralButton(
       {super.key,
-        this.buttonColor,
-        required this.buttonText,
-        this.textColor,
-        required this.onPressed,
-        this.borderRadius,
-        this.height,
-        this.fontWeight,
-        this.fontSize,
-        this.border,
-        this.width,
-        this.iconPath,
-        this.iconSize,
-        this.iconOnly,
-        this.iconColor});
+      this.buttonColor,
+      this.borderSide,
+      required this.buttonText,
+      this.textColor,
+      required this.onPressed,
+      this.borderRadius,
+      this.height,
+      this.fontWeight,
+      this.fontSize,
+      this.border,
+      this.width,
+      this.iconPath,
+      this.iconSize,
+      this.iconOnly,
+      this.iconColor});
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(borderRadius ?? 200),
+      shape: RoundedRectangleBorder(
+          side: borderSide ?? BorderSide.none,
+          borderRadius: BorderRadius.circular(borderRadius ?? 200)),
       color: buttonColor ?? AppColors.primary500,
       child: InkWell(
         onTap: onPressed,
@@ -59,17 +63,17 @@ class GeneralButton extends StatelessWidget {
             children: [
               iconPath != null
                   ? Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    iconPath!,
-                    height: iconSize ?? 15,
-                    width: iconSize ?? 15,
-                    colorFilter: ColorFilter.mode(
-                        iconColor ?? Colors.white, BlendMode.srcIn),
-                  ),
-                ],
-              )
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          iconPath!,
+                          height: iconSize ?? 15,
+                          width: iconSize ?? 15,
+                          colorFilter: ColorFilter.mode(
+                              iconColor ?? Colors.white, BlendMode.srcIn),
+                        ),
+                      ],
+                    )
                   : const SizedBox(),
               /*Visibility(
                 visible: iconPath != null,
