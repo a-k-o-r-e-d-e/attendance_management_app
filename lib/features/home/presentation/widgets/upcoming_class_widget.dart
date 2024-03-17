@@ -3,7 +3,6 @@ import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:attendance_management_app/shared/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import '../../domain/model/upcoming_class_model.dart';
-import 'package:intl/intl.dart';
 
 class UpcomingClassWidget extends StatelessWidget {
   final UpcomingClassModel model;
@@ -13,8 +12,7 @@ class UpcomingClassWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
-      height: heightSizer(318, context),
+      height: heightSizer(281, context),
       width: widthSizer(258, context),
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.appLight30),
@@ -24,17 +22,26 @@ class UpcomingClassWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            height: 150,
-            decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(4)),
+            height: 184,
+            decoration: const BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(4), topLeft: Radius.circular(4))),
           ),
-          CustomText(
-            title: model.courseTitle,
-            size: widthSizer(16, context),
-            weight: FontWeight.w500,
-            overflow: TextOverflow.clip,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: CustomText(
+              title: model.courseTitle,
+              size: widthSizer(16, context),
+              weight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          Row(
+          const Divider(
+            height: 0,
+            color: AppColors.appLight40,
+          ),
+          /*  Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
@@ -81,7 +88,55 @@ class UpcomingClassWidget extends StatelessWidget {
                 weight: FontWeight.w500,
               ),
             ],
-          )
+          )*/
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.access_time_filled_rounded,
+                      color: AppColors.medium200,
+                    ),
+                    CustomText(
+                      title: "08 - 10AM",
+                      size: 14,
+                      weight: FontWeight.w500,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.calendar_month,
+                      color: AppColors.medium200,
+                    ),
+                    CustomText(
+                      title: "15/02",
+                      size: 14,
+                      weight: FontWeight.w500,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.location_on,
+                      color: AppColors.medium200,
+                    ),
+                    CustomText(
+                      title: "Online",
+                      size: 14,
+                      weight: FontWeight.w500,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          verticalSpace(8)
         ],
       ),
     );
