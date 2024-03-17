@@ -17,60 +17,60 @@ class SelectUserTypeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     UserType userType = ref.watch(createAccountUserTypeProvider);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Divider(
-              color: AppColors.appLight50,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: [
-                  verticalSpace(24),
-                  GeneralButton(
-                    buttonText: "Next",
-                    onPressed: () {
-                      userType == UserType.lecturer
-                          ? context.router.navigateNamed("/create-account")
-                          : null;
-                    },
-                    buttonColor:
-                        userType == UserType.none ? AppColors.appLight50 : null,
-                    height: 48,
-                  ),
-                  verticalSpace(24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CustomText(
-                        title: "Already have an account?",
-                        weight: FontWeight.w400,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Divider(
+            color: AppColors.appLight50,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                verticalSpace(24),
+                GeneralButton(
+                  buttonText: "Next",
+                  onPressed: () {
+                    userType == UserType.lecturer
+                        ? context.router.navigateNamed("/create-account")
+                        : null;
+                  },
+                  buttonColor:
+                      userType == UserType.none ? AppColors.appLight50 : null,
+                  height: 48,
+                ),
+                verticalSpace(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomText(
+                      title: "Already have an account?",
+                      weight: FontWeight.w400,
+                      size: 16,
+                    ),
+                    horizontalSpace(16),
+                    GestureDetector(
+                      onTap: () {
+                        context.router.navigateNamed("/login");
+                      },
+                      child: const CustomText(
+                        title: "Login",
+                        weight: FontWeight.w600,
                         size: 16,
                       ),
-                      horizontalSpace(16),
-                      GestureDetector(
-                        onTap: () {
-                          context.router.navigateNamed("/login");
-                        },
-                        child: const CustomText(
-                          title: "Login",
-                          weight: FontWeight.w600,
-                          size: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  verticalSpace(heightSizer(56, context)),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                verticalSpace(heightSizer(56, context)),
+              ],
             ),
-          ],
-        ),
-        body: Padding(
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
