@@ -37,7 +37,7 @@ class ApiServiceImpl extends ApiService {
       _navigationService.replaceAll([const LoginRoute()]);
       return null;
     } else {
-      String? token = (await _savedInfo.getInfo(AUTH_TOKEN_KEY)) as String?;
+      String? token = (await _savedInfo.getInfo(AppStrings.AUTH_TOKEN_KEY)) as String?;
       return token;
     }
   }
