@@ -4,6 +4,7 @@ import '../utilities/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? hintText;
+  final String? initialValue;
   final Widget? suffixIcon;
   final Color? fillColor;
   final double? borderSize;
@@ -15,31 +16,32 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
 
-  const CustomTextFormField(
-      {super.key,
-      this.hintText,
-      this.suffixIcon,
-      this.fillColor,
-      this.controller,
-      this.validator,
-      this.keyboardType,
-      this.border,
-      this.obscureText,
-      this.borderSize,
-      this.maxLine, this.readOnly});
+  const CustomTextFormField({super.key,
+    this.hintText,
+    this.suffixIcon,
+    this.fillColor,
+    this.controller,
+    this.validator,
+    this.keyboardType,
+    this.border,
+    this.obscureText,
+    this.borderSize,
+    this.maxLine, this.readOnly, this.initialValue});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: false,
+      initialValue: initialValue,
       maxLines: maxLine ?? 1,
       keyboardType: keyboardType,
       controller: controller,
-      readOnly: readOnly?? false,
+      readOnly: readOnly ?? false,
       validator: validator,
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 5),
+        const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 5),
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: fillColor ?? Colors.white,
@@ -51,7 +53,7 @@ class CustomTextFormField extends StatelessWidget {
         border: border ??
             OutlineInputBorder(
               borderSide: BorderSide(
-                  width: borderSize ?? 1, color: AppColors.medium200),
+                  width: borderSize ?? 1, color: AppColors.appLight40),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
         errorBorder: OutlineInputBorder(
@@ -61,7 +63,7 @@ class CustomTextFormField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: AppColors.medium200,
+            color: AppColors.appLight40,
             width: 1.0,
           ),
         ),
