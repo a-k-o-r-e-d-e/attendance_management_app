@@ -1,29 +1,17 @@
-import 'package:attendance_management_app/features/course/domain/models/course_model.dart';
-import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
-import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
 import 'package:attendance_management_app/shared/routes/app_route.dart';
 import 'package:attendance_management_app/shared/services/location_service/domain/repository/location_service_repo.dart';
 import 'package:attendance_management_app/shared/services/location_service/providers/location_provider.dart';
-import 'package:attendance_management_app/shared/services/saved_info_service/domain/repository/saved_info_repo.dart';
-import 'package:attendance_management_app/shared/services/saved_info_service/providers/saved_info_provider.dart';
-import 'package:attendance_management_app/shared/utilities/app_strings.dart';
-import 'package:attendance_management_app/shared/widgets/custom_bottom_navbar.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 import '../../../../shared/widgets/custom_text_form_field.dart';
-import '../../../home/presentation/widgets/upcoming_class_widget.dart';
-import 'dart:math' as math;
 
-import '../widgets/set_distance_modal.dart';
 
 @RoutePage()
 class AttendanceScreen extends ConsumerWidget {
