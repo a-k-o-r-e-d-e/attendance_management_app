@@ -5,7 +5,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utilities/app_colors.dart';
 import '../utilities/string_utils.dart';
 
-enum NavIdentifier { home, record, Class, profile }
+enum NavIdentifier { home, course, classNav, profile }
+
+extension NavIdentifierExtension on NavIdentifier {
+  String get textAsString {
+    switch (this) {
+      case NavIdentifier.home:
+        return "Home";
+      case NavIdentifier.course:
+        return "Course";
+      case NavIdentifier.classNav:
+        return "Class";
+      case NavIdentifier.profile:
+        return "Profile";
+    }
+  }
+}
 
 class CustomBottomNavBar extends StatelessWidget {
   final Widget child;
@@ -78,7 +93,7 @@ class _CustomBottomNavBar extends StatelessWidget {
                         BlendMode.srcIn)),
                 Text(
                   StringUtils.capitalize(
-                      NavItem.navItems[index].identifier.name),
+                      NavItem.navItems[index].identifier.textAsString),
                   style: TextStyle(
                       color:
                           isActive ? AppColors.primary500 : AppColors.medium300,
@@ -105,14 +120,17 @@ class NavItem {
     required this.icon,
   });
 
-  static List<NavItem> navItems = [home, learn, piggybank, profile];
+  static List<NavItem> navItems = [home, course, classNav, profile];
 
   static NavItem home =
       NavItem(route: '/home', identifier: NavIdentifier.home, icon: "home");
-  static NavItem learn = NavItem(
-      route: '/record', identifier: NavIdentifier.record, icon: "record");
-  static NavItem piggybank =
-      NavItem(route: '/class', identifier: NavIdentifier.Class, icon: "class");
+
+  static NavItem course = NavItem(
+      route: '/course', identifier: NavIdentifier.course, icon: "course");
+
+  static NavItem classNav = NavItem(
+      route: '/class', identifier: NavIdentifier.classNav, icon: "class");
+
   static NavItem profile = NavItem(
       route: '/profile', identifier: NavIdentifier.profile, icon: "user");
 }
