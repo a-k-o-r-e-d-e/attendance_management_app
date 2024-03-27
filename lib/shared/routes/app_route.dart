@@ -1,3 +1,4 @@
+import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
 import 'package:attendance_management_app/features/authentication/presentation/screens/create_account_screen.dart';
 import 'package:attendance_management_app/features/authentication/presentation/screens/login_screen.dart';
 import 'package:attendance_management_app/features/authentication/presentation/screens/select_user_type_screen.dart';
@@ -17,6 +18,7 @@ import 'package:attendance_management_app/features/onboarding/presentation/scree
 import 'package:attendance_management_app/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:attendance_management_app/features/profile/presentation/screens/profile_screen.dart';
 import 'package:attendance_management_app/features/profile/presentation/screens/settings_screen.dart';
+import 'package:attendance_management_app/shared/screens/startup/startup_screen.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +29,8 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         /// routes go here
-        AutoRoute(page: OnboardingRoute.page, initial: true, path: "/"),
+        AutoRoute(page: StartupRoute.page, initial: true, path: "/"),
+        AutoRoute(page: OnboardingRoute.page, path: "/onboarding-screen"),
         AutoRoute(page: SelectUserTypeRoute.page, path: "/select-user-type"),
         AutoRoute(page: CreateAccountRoute.page, path: "/create-account"),
         AutoRoute(page: LoginRoute.page, path: "/login"),
@@ -45,5 +48,5 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ProfileRoute.page, path: "/profile"),
         AutoRoute(page: EditProfileRoute.page, path: "/edit-profile"),
         AutoRoute(page: SettingsRoute.page, path: "/settings"),
-  ];
+      ];
 }

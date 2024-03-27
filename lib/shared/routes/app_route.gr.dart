@@ -52,9 +52,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     EditProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<EditProfileRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EditProfileScreen(),
+        child: EditProfileScreen(
+          args.user,
+          key: args.key,
+        ),
       );
     },
     HomeRoute.name: (routeData) {
@@ -64,9 +68,11 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     LoginRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginRouteArgs>(
+          orElse: () => const LoginRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginScreen(),
+        child: LoginScreen(key: args.key),
       );
     },
     OnboardingRoute.name: (routeData) {
@@ -121,21 +127,31 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const StartClassScreen(),
       );
     },
+    StartupRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StartupScreen(),
+      );
+    },
     StudentInfoRoute.name: (routeData) {
-      final args = routeData.argsAs<StudentInfoRouteArgs>(
-          orElse: () => const StudentInfoRouteArgs());
+      final args = routeData.argsAs<StudentInfoRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: StudentInfoScreen(
+          args.student,
           key: args.key,
           attendance: args.attendance,
         ),
       );
     },
     StudentListRoute.name: (routeData) {
+      final args = routeData.argsAs<StudentListRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const StudentListScreen(),
+        child: StudentListScreen(
+          args.students,
+          key: args.key,
+        ),
       );
     },
   };
@@ -227,16 +243,40 @@ class CreateCourseRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [EditProfileScreen]
-class EditProfileRoute extends PageRouteInfo<void> {
-  const EditProfileRoute({List<PageRouteInfo>? children})
-      : super(
+class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
+  EditProfileRoute({
+    required UserAccount user,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           EditProfileRoute.name,
+          args: EditProfileRouteArgs(
+            user: user,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EditProfileRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<EditProfileRouteArgs> page =
+      PageInfo<EditProfileRouteArgs>(name);
+}
+
+class EditProfileRouteArgs {
+  const EditProfileRouteArgs({
+    required this.user,
+    this.key,
+  });
+
+  final UserAccount user;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'EditProfileRouteArgs{user: $user, key: $key}';
+  }
 }
 
 /// generated route for
@@ -255,16 +295,30 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [LoginScreen]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
-      : super(
+class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           LoginRoute.name,
+          args: LoginRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'LoginRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<LoginRouteArgs> page = PageInfo<LoginRouteArgs>(name);
+}
+
+class LoginRouteArgs {
+  const LoginRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LoginRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -343,7 +397,7 @@ class SettingsRoute extends PageRouteInfo<void> {
 class SingleClassRoute extends PageRouteInfo<SingleClassRouteArgs> {
   SingleClassRoute({
     Key? key,
-    required CourseModel course,
+    required Course course,
     List<PageRouteInfo>? children,
   }) : super(
           SingleClassRoute.name,
@@ -368,7 +422,7 @@ class SingleClassRouteArgs {
 
   final Key? key;
 
-  final CourseModel course;
+  final Course course;
 
   @override
   String toString() {
@@ -381,7 +435,7 @@ class SingleClassRouteArgs {
 class SingleCourseRoute extends PageRouteInfo<SingleCourseRouteArgs> {
   SingleCourseRoute({
     Key? key,
-    required CourseModel course,
+    required Course course,
     List<PageRouteInfo>? children,
   }) : super(
           SingleCourseRoute.name,
@@ -406,7 +460,7 @@ class SingleCourseRouteArgs {
 
   final Key? key;
 
-  final CourseModel course;
+  final Course course;
 
   @override
   String toString() {
@@ -429,15 +483,31 @@ class StartClassRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [StartupScreen]
+class StartupRoute extends PageRouteInfo<void> {
+  const StartupRoute({List<PageRouteInfo>? children})
+      : super(
+          StartupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StartupRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [StudentInfoScreen]
 class StudentInfoRoute extends PageRouteInfo<StudentInfoRouteArgs> {
   StudentInfoRoute({
+    required Profile student,
     Key? key,
     bool? attendance = false,
     List<PageRouteInfo>? children,
   }) : super(
           StudentInfoRoute.name,
           args: StudentInfoRouteArgs(
+            student: student,
             key: key,
             attendance: attendance,
           ),
@@ -452,9 +522,12 @@ class StudentInfoRoute extends PageRouteInfo<StudentInfoRouteArgs> {
 
 class StudentInfoRouteArgs {
   const StudentInfoRouteArgs({
+    required this.student,
     this.key,
     this.attendance = false,
   });
+
+  final Profile student;
 
   final Key? key;
 
@@ -462,20 +535,44 @@ class StudentInfoRouteArgs {
 
   @override
   String toString() {
-    return 'StudentInfoRouteArgs{key: $key, attendance: $attendance}';
+    return 'StudentInfoRouteArgs{student: $student, key: $key, attendance: $attendance}';
   }
 }
 
 /// generated route for
 /// [StudentListScreen]
-class StudentListRoute extends PageRouteInfo<void> {
-  const StudentListRoute({List<PageRouteInfo>? children})
-      : super(
+class StudentListRoute extends PageRouteInfo<StudentListRouteArgs> {
+  StudentListRoute({
+    required List<Profile> students,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           StudentListRoute.name,
+          args: StudentListRouteArgs(
+            students: students,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'StudentListRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<StudentListRouteArgs> page =
+      PageInfo<StudentListRouteArgs>(name);
+}
+
+class StudentListRouteArgs {
+  const StudentListRouteArgs({
+    required this.students,
+    this.key,
+  });
+
+  final List<Profile> students;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'StudentListRouteArgs{students: $students, key: $key}';
+  }
 }
