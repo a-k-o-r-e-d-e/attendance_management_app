@@ -1,8 +1,6 @@
 import 'package:attendance_management_app/features/home/domain/providers/home_repo_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../shared/services/dio_service/domain/models/api_exception_model.dart';
-import '../../../../shared/services/dio_service/domain/models/api_response_model.dart';
 import '../../domain/model/upcoming_class_model.dart';
 
 part 'upcoming_class_provider.g.dart';
