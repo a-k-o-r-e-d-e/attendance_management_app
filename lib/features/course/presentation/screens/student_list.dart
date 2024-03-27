@@ -1,5 +1,4 @@
-import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
-import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
+import 'package:attendance_management_app/shared/routes/app_route.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,15 +8,17 @@ import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 import '../../../../shared/widgets/custom_text_form_field.dart';
+import '../../../authentication/domain/models/user_model.dart';
 
 @RoutePage()
 class StudentListScreen extends ConsumerWidget {
-  const StudentListScreen({super.key});
+  final List<Profile> students;
+
+  const StudentListScreen(this.students, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<UpcomingClassModel>> activity =
-        ref.watch(upcomingClassProvider);
+    //final AsyncValue<List<UpcomingClassModel>> activity = ref.watch(upcomingClassProvider);
     return Scaffold(
       appBar: CustomAppBar(
         prefixIcon: GestureDetector(
@@ -59,13 +60,15 @@ class StudentListScreen extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: () {
-                        context.navigateNamedTo("/student-info");
+                        context.navigateTo(
+                            StudentInfoRoute(student: students[index]));
                       },
                       leading: const CircleAvatar(
                         radius: 24,
                       ),
-                      title: const CustomText(
-                        title: "Adebimpe Ade",
+                      title: CustomText(
+                        title:
+                            "${students[index].lastName} ${students[index].firstName}",
                         size: 16,
                         weight: FontWeight.w500,
                       ),
@@ -77,7 +80,7 @@ class StudentListScreen extends ConsumerWidget {
                     );
                   },
                   separatorBuilder: (ctx, idx) => verticalSpace(8),
-                  itemCount: 10),
+                  itemCount: students.length),
             )
           ],
         ),

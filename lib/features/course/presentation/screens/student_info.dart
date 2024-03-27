@@ -1,5 +1,3 @@
-import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
-import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +6,15 @@ import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
+import '../../../authentication/domain/models/user_model.dart';
 
 @RoutePage()
 class StudentInfoScreen extends ConsumerStatefulWidget {
+  final Profile student;
   final bool? attendance;
 
-  const StudentInfoScreen({
+  const StudentInfoScreen(
+    this.student, {
     super.key,
     this.attendance = false,
   });
@@ -27,8 +28,7 @@ class _StudentInfoScreenState extends ConsumerState<StudentInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<UpcomingClassModel>> activity =
-        ref.watch(upcomingClassProvider);
+    //final AsyncValue<List<UpcomingClassModel>> activity = ref.watch(upcomingClassProvider);
     return Scaffold(
       appBar: CustomAppBar(
         prefixIcon: GestureDetector(
@@ -55,14 +55,15 @@ class _StudentInfoScreenState extends ConsumerState<StudentInfoScreen> {
                   ),
                 ),
                 verticalSpace(32),
-                const CustomText(
-                  title: "Adebimpe Ade",
+                CustomText(
+                  title:
+                      "${widget.student.lastName} ${widget.student.firstName}",
                   size: 24,
                   weight: FontWeight.w500,
                 ),
                 verticalSpace(8),
-                const CustomText(
-                  title: "Student ID: 120203113",
+                CustomText(
+                  title: "Student ID: ${widget.student.id}",
                   size: 16,
                   weight: FontWeight.w500,
                   color: AppColors.medium300,
@@ -141,8 +142,8 @@ class _StudentInfoScreenState extends ConsumerState<StudentInfoScreen> {
                   size: 16,
                   weight: FontWeight.w500,
                 ),
-                const CustomText(
-                  title: "B.Sc, Computer Science",
+                CustomText(
+                  title: "B.Sc, ${widget.student.department}",
                   size: 14,
                   weight: FontWeight.w500,
                 ),
@@ -184,7 +185,8 @@ class _StudentInfoScreenState extends ConsumerState<StudentInfoScreen> {
                             present = false;
                           });
                         },
-                        borderSide: BorderSide(color: AppColors.primary500),
+                        borderSide:
+                            const BorderSide(color: AppColors.primary500),
                         //border: Border.all(color: AppColors.primary500),
                         buttonColor: Colors.white,
                         textColor: AppColors.primary500,
