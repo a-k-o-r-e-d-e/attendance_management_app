@@ -1,5 +1,6 @@
 import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
 import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
+import 'package:attendance_management_app/shared/providers/app_user_provider.dart';
 import 'package:attendance_management_app/shared/widgets/custom_bottom_navbar.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,6 +12,7 @@ import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
+import '../../../authentication/domain/models/user_model.dart';
 import '../widgets/upcoming_class_widget.dart';
 
 @RoutePage()
@@ -21,6 +23,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<UpcomingClassModel>> activity =
         ref.watch(upcomingClassProvider);
+    final UserAccount appUser = ref.watch(appUserProvider);
     return Scaffold(
       appBar: CustomAppBar(
         prefixIcon: null,
@@ -37,15 +40,18 @@ class HomeScreen extends ConsumerWidget {
         parent: NavIdentifier.home,
         child: Scaffold(
           backgroundColor: Colors.white,
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
-            child: GeneralButton(
-              buttonText: 'Create a course',
-              onPressed: () {
-                context.router.navigateNamed("/create-class");
-              },
-            ),
-          ),
+          bottomNavigationBar: appUser.profile?.user?.roles![0] == "lecturer"
+              ? Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
+                  child: GeneralButton(
+                    buttonText: 'Create a course',
+                    onPressed: () {
+                      context.router.navigateNamed("/create-course");
+                    },
+                  ),
+                )
+              : null,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -144,10 +150,8 @@ class HomeScreen extends ConsumerWidget {
                       enabled: true,
                       //Default value
                       direction: ShimmerDirection.ltr,
-                      gradient: LinearGradient(colors: [
-                        Colors.white,
-                        Colors.grey.withOpacity(.5)
-                      ]),
+                      gradient: LinearGradient(
+                          colors: [Colors.white, Colors.grey.withOpacity(.5)]),
                       child: Container(
                         decoration: BoxDecoration(
                             color: AppColors.appGrey,
