@@ -3,15 +3,13 @@ import '../models/api_exception_model.dart';
 import '../models/api_response_model.dart';
 
 abstract class ApiService {
-  Future<bool> checkTokenExpiry();
-
   Future<String?> fetchToken();
 
   Future<ApiResponseModel<Response, ApiException>> post(
       String endPoint, Map<String, dynamic>? data, bool useToken);
 
   Future<ApiResponseModel<Response, ApiException>> get(
-      String endPoint, bool? useToken);
+      String endPoint, bool? useToken, Map<String, dynamic>? query);
 
   Future<ApiResponseModel<Response, ApiException>> put(
       String endPoint, Map<String, dynamic>? data, bool useToken);

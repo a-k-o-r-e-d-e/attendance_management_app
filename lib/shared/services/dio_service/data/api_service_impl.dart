@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../../../routes/app_route.dart';
 import '../../../utilities/app_strings.dart';
 import '../../saved_info_service/domain/repository/saved_info_repo.dart';
 import '../domain/models/api_exception_model.dart';
@@ -10,36 +9,14 @@ import '../domain/repository/api_service_repo.dart';
 class ApiServiceImpl extends ApiService {
   final Dio _dio;
   final SavedInfoService _savedInfo;
-  final AppRouter _navigationService;
 
-  ApiServiceImpl(this._dio, this._savedInfo, this._navigationService);
-
-  @override
-  Future<bool> checkTokenExpiry() async {
-    // DateTime? tokenExpiryTime = await _savedInfo.getTokenExpirationTime();
-    // if (tokenExpiryTime == null) {
-    //   print('expired -1');
-    //   return true;
-    // } else if (DateTime.now().isAfter(tokenExpiryTime)) {
-    //   print('expired -2');
-    //   return true;
-    //   //check if its expiry is close(in 3 minutes time)
-    // } else {
-    //   print('not expired');
-    //   return false;
-    // }
-    return false;
-  }
+  ApiServiceImpl(this._dio, this._savedInfo,);
 
   @override
   Future<String?> fetchToken() async {
-    if (await checkTokenExpiry()) {
-      _navigationService.replaceAll([const LoginRoute()]);
-      return null;
-    } else {
-      String? token = (await _savedInfo.getInfo(AppStrings.AUTH_TOKEN_KEY)) as String?;
-      return token;
-    }
+    String? token =
+        (await _savedInfo.getInfo(AppStrings.AUTH_TOKEN_KEY)) as String?;
+    return token;
   }
 
   @override
@@ -56,8 +33,7 @@ class ApiServiceImpl extends ApiService {
     }
     try {
       Response response = await _dio
-          .post(endPoint, data: data)
-          .timeout(const Duration(seconds: 120));
+          .post(endPoint, data: data);
       // Handle the response
 
       return SuccessResponse(response);
@@ -69,7 +45,7 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<ApiResponseModel<Response, ApiException>> get(
-      String endPoint, bool? useToken) async {
+      String endPoint, bool? useToken, Map<String, dynamic>? query) async {
     if (useToken == true) {
       String? token = await fetchToken();
       if (token == null) {
@@ -79,8 +55,8 @@ class ApiServiceImpl extends ApiService {
       }
     }
     try {
-      Response response =
-          await _dio.get(endPoint).timeout(const Duration(seconds: 120));
+      Response response = await _dio
+          .get(endPoint, queryParameters: query);
       // Handle the response
 
       return SuccessResponse(response);
@@ -107,8 +83,7 @@ class ApiServiceImpl extends ApiService {
     }
     try {
       Response response = await _dio
-          .put(endPoint, data: data)
-          .timeout(const Duration(seconds: 30));
+          .put(endPoint, data: data);
       // Handle the response
 
       return SuccessResponse(response);
@@ -132,8 +107,7 @@ class ApiServiceImpl extends ApiService {
     }
     try {
       Response response = await _dio
-          .delete(endPoint, data: data)
-          .timeout(const Duration(seconds: 30));
+          .delete(endPoint, data: data);
       // Handle the response
 
       return SuccessResponse(response);
@@ -147,26 +121,24 @@ class ApiServiceImpl extends ApiService {
   ApiException handleError(DioException error) {
     String errorMessage;
     // Check if error.response is null
+    print(error.response!.data["message"]);
     if (error.response == null) {
       return ApiException("Network request failed", -1);
     }
 
     try {
-      dynamic errorJson = error.response!.data;
-
+      Map errorJson = error.response!.data;
       // Check if errorJson is a map
-      if (errorJson is Map) {
-        List keys = errorJson.keys.toList();
+      List keys = errorJson.keys.toList();
 
-        // Check if there are any keys in the JSON
-        if (keys.isNotEmpty) {
-          if (errorJson[keys[0]] is List) {
-            errorMessage = errorJson[keys[0]][0];
-          } else {
-            errorMessage = errorJson[keys[0]];
-          }
-          return ApiException(errorMessage, error.response!.statusCode);
+      // Check if there are any keys in the JSON
+      if (keys.isNotEmpty) {
+        if (errorJson["message"] is List) {
+          errorMessage = errorJson["message"][0];
+        } else {
+          errorMessage = errorJson["message"];
         }
+        return ApiException(errorMessage, error.response!.statusCode);
       }
     } catch (e) {
       // Handle JSON parsing error
