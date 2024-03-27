@@ -1,10 +1,8 @@
 import 'dart:developer';
 
 import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
-import 'package:attendance_management_app/features/authentication/presentation/providers/states/user_type_state.dart';
 import 'package:attendance_management_app/shared/core/api_endpoints.dart';
 import 'package:attendance_management_app/shared/services/dio_service/domain/models/api_response_model.dart';
-import 'package:attendance_management_app/shared/utilities/app_strings.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../shared/services/dio_service/domain/models/api_exception_model.dart';

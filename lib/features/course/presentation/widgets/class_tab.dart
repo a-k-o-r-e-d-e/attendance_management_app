@@ -4,9 +4,7 @@ import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:attendance_management_app/shared/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 
-import '../../domain/models/course_model.dart';
 
 class ClassTab extends StatelessWidget {
   const ClassTab({
@@ -58,7 +56,7 @@ class ClassTab extends StatelessWidget {
               child: ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return ClassCard();
+                    return const ClassCard();
                   },
                   separatorBuilder: (ctx, idx) => verticalSpace(8),
                   itemCount: 2)),

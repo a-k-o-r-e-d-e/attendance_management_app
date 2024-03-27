@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../domain/models/course_model.dart';
 
 class CourseWidget extends StatelessWidget {
-  final CourseModel model;
+  final Course model;
 
   const CourseWidget({super.key, required this.model});
 
@@ -47,7 +47,7 @@ class CourseWidget extends StatelessWidget {
                 SvgPicture.asset("assets/svgs/class_card.svg"),
                 CustomText(
                   title:
-                      " ${model.classes} Classes has been added to this course",
+                      " 0 Classes has been added to this course",
                   size: widthSizer(14, context),
                   weight: FontWeight.w500,
                 ),

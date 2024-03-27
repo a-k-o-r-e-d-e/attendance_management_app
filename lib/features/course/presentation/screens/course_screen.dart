@@ -1,6 +1,5 @@
 import 'package:attendance_management_app/features/course/domain/models/course_model.dart';
-import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
-import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
+import 'package:attendance_management_app/features/course/presentation/providers/fetch_courses_provider.dart';
 import 'package:attendance_management_app/shared/routes/app_route.dart';
 import 'package:attendance_management_app/shared/widgets/custom_bottom_navbar.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
@@ -9,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../shared/providers/app_user_provider.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
+import '../../../authentication/domain/models/user_model.dart';
 import '../widgets/course_widget.dart';
 
 @RoutePage()
@@ -21,8 +22,9 @@ class CourseScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<UpcomingClassModel>> activity =
-        ref.watch(upcomingClassProvider);
+    final AsyncValue<List<Course>> allCourses = ref.watch(fetchCourseProvider);
+    final UserAccount appUser = ref.watch(appUserProvider);
+
     return Scaffold(
       appBar: CustomAppBar(
         prefixIcon: null,
@@ -39,15 +41,18 @@ class CourseScreen extends ConsumerWidget {
         parent: NavIdentifier.course,
         child: Scaffold(
           backgroundColor: Colors.white,
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
+          bottomNavigationBar: appUser.profile?.user?.roles![0] == "lecturer"
+              ? Padding(
+            padding:
+            const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
             child: GeneralButton(
               buttonText: 'Create a course',
               onPressed: () {
-                context.router.navigateNamed("/create-class");
+                context.router.navigateNamed("/create-course");
               },
             ),
-          ),
+          )
+              : null,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -72,7 +77,7 @@ class CourseScreen extends ConsumerWidget {
                     ),
                   ),*/
                   verticalSpace(24),
-                  activity.when(data: (List<UpcomingClassModel> data) {
+                  allCourses.when(data: (List<Course> data) {
                     return Visibility(
                       visible: data.isNotEmpty,
                       replacement: Column(
@@ -92,7 +97,7 @@ class CourseScreen extends ConsumerWidget {
                       ),
                       child: Column(
                         children: [
-    /*
+                          /*
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -124,8 +129,7 @@ class CourseScreen extends ConsumerWidget {
                             child: ListView.separated(
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
-                                  CourseModel course = CourseModel(
-                                      "Introduction to Computer", 2, "");
+                                  Course course = data[index];
                                   return GestureDetector(
                                     onTap: () {
                                       context.pushRoute(
@@ -138,7 +142,7 @@ class CourseScreen extends ConsumerWidget {
                                 },
                                 separatorBuilder: (ctx, idx) =>
                                     verticalSpace(24),
-                                itemCount: 2),
+                                itemCount: data.length),
                           ),
                         ],
                       ),
@@ -154,10 +158,8 @@ class CourseScreen extends ConsumerWidget {
                       enabled: true,
                       //Default value
                       direction: ShimmerDirection.ltr,
-                      gradient: LinearGradient(colors: [
-                        Colors.white,
-                        Colors.grey.withOpacity(.5)
-                      ]),
+                      gradient: LinearGradient(
+                          colors: [Colors.white, Colors.grey.withOpacity(.5)]),
                       child: Container(
                         decoration: BoxDecoration(
                             color: AppColors.appGrey,

@@ -1,7 +1,7 @@
 import 'package:attendance_management_app/features/class/data/repository/meeting_repo_impl.dart';
-import 'package:attendance_management_app/features/class/domain/providers/meeting_data_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import '../../data/providers/meeting_data_provider.dart';
 
 
 part 'meeting_repo_provider.g.dart';
@@ -9,9 +9,9 @@ part 'meeting_repo_provider.g.dart';
 @riverpod
 class MeetingRepo extends _$MeetingRepo {
   @override
-  CalendarDataSource build() {
+  MeetingRepoImpl build() {
     final source = ref.watch(meetingDataProvider);
-    return MeetingRepoImpl(source);
+    return MeetingRepoImpl();
   }
 // Add methods to mutate the state
 }

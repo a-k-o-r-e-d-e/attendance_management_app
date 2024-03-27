@@ -1,6 +1,5 @@
 import 'package:attendance_management_app/features/authentication/presentation/providers/create_user_state_provider.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,9 +32,7 @@ class SelectUserTypeScreen extends ConsumerWidget {
                 GeneralButton(
                   buttonText: "Next",
                   onPressed: () {
-                    userType == UserType.lecturer
-                        ? context.router.navigateNamed("/create-account")
-                        : null;
+                    context.router.navigateNamed("/create-account");
                   },
                   buttonColor:
                       userType == UserType.none ? AppColors.appLight50 : null,

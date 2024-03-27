@@ -1,7 +1,3 @@
-import 'package:attendance_management_app/features/authentication/data/data_source/authentication_remote_data_source.dart';
-import 'package:attendance_management_app/features/authentication/data/providers/auth_data_provider.dart';
-import 'package:attendance_management_app/features/authentication/data/repository/auth_repo_impl.dart';
-import 'package:attendance_management_app/features/authentication/domain/repository/auth_repo.dart';
 import 'package:attendance_management_app/features/course/data/providers/course_data_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

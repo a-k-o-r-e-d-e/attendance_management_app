@@ -1,5 +1,4 @@
 import 'package:attendance_management_app/shared/routes/app_route.dart';
-import 'package:attendance_management_app/shared/services/location_service/domain/repository/location_service_repo.dart';
 import 'package:attendance_management_app/shared/services/location_service/providers/location_provider.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,7 +10,7 @@ import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 import '../../../../shared/widgets/custom_text_form_field.dart';
-
+import '../../../authentication/domain/models/user_model.dart';
 
 @RoutePage()
 class AttendanceScreen extends ConsumerWidget {
@@ -24,8 +23,8 @@ class AttendanceScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LocationService locationService =
-        ref.read(locationServiceMethodsProvider);
+    //final LocationService locationService =
+    ref.read(locationServiceMethodsProvider);
     return Scaffold(
         appBar: CustomAppBar(
           flexibleSpace: Container(
@@ -85,7 +84,8 @@ class AttendanceScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       return ListTile(
                         onTap: () {
-                          context.pushRoute(StudentInfoRoute(attendance: true));
+                          context.pushRoute(StudentInfoRoute(
+                              attendance: true, student: Profile()));
                         },
                         leading: const CircleAvatar(
                           radius: 24,

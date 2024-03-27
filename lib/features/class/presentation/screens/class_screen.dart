@@ -39,7 +39,7 @@ class ClassScreen extends ConsumerWidget {
         parent: NavIdentifier.classNav,
         child: Scaffold(
           backgroundColor: Colors.white,
-    /*
+          /*
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
             child: GeneralButton(
@@ -77,8 +77,7 @@ class ClassScreen extends ConsumerWidget {
                         child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const CustomText(
                                   title: "Upcoming Class",
@@ -88,14 +87,12 @@ class ClassScreen extends ConsumerWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    ClassScheduleBottomSheet.show(
-                                        context, ref);
+                                    ClassScheduleBottomSheet.show(context, ref);
                                   },
                                   child: Ink(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4),
+                                        borderRadius: BorderRadius.circular(4),
                                         border: Border.all(
                                             color: AppColors.appLight30)),
                                     child: SvgPicture.asset(
@@ -111,10 +108,9 @@ class ClassScreen extends ConsumerWidget {
                                 itemBuilder: (context, index) =>
                                     GestureDetector(
                                       onTap: () {
-                                        CourseModel course = CourseModel(
-                                            "Introduction to Computer",
-                                            2,
-                                            "");
+                                        Course course = Course(
+                                          title: "Introduction to Computer",
+                                        );
                                         context.pushRoute(
                                             SingleClassRoute(course: course));
                                       },

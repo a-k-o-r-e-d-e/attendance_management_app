@@ -2,7 +2,6 @@ import 'package:attendance_management_app/features/class/domain/providers/meetin
 import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class ClassScheduleBottomSheet extends StatelessWidget {
   static show(BuildContext context, WidgetRef ref) {
@@ -31,12 +30,7 @@ class ClassScheduleBottomSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       height: screenHeight(context) / 2,
-      child: SfCalendar(
-        view: CalendarView.month,
-        dataSource: dataSource,
-        monthViewSettings: const MonthViewSettings(
-            appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
-      ),
+
     );
   }
 }

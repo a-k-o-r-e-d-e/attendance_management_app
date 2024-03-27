@@ -1,6 +1,4 @@
 import 'package:attendance_management_app/features/course/domain/models/course_model.dart';
-import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
-import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expansion_widget/expansion_widget.dart';
@@ -14,7 +12,7 @@ import '../../../../shared/widgets/custom_text.dart';
 
 @RoutePage()
 class SingleClassScreen extends ConsumerWidget {
-  final CourseModel course;
+  final Course course;
 
   const SingleClassScreen({
     super.key,
@@ -23,11 +21,10 @@ class SingleClassScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<UpcomingClassModel>> activity =
-        ref.watch(upcomingClassProvider);
+    //final AsyncValue<List<UpcomingClassModel>> activity = ref.watch(upcomingClassProvider);
     return Scaffold(
         appBar: CustomAppBar(
-          title: course.title,
+          title: course.title!,
           prefixIcon: GestureDetector(
               onTap: () {
                 context.back();

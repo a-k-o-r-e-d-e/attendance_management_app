@@ -1,4 +1,3 @@
-import 'package:attendance_management_app/features/class/domain/providers/meeting_repo_provider.dart';
 import 'package:attendance_management_app/shared/utilities/app_colors.dart';
 import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:attendance_management_app/shared/widgets/custom_text.dart';
@@ -7,7 +6,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../../../shared/widgets/general_button.dart';
 

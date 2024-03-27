@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/src/widgets/basic.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../domain/repository/location_service_repo.dart';
