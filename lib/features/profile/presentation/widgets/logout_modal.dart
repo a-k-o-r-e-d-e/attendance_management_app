@@ -1,13 +1,17 @@
 import 'package:attendance_management_app/shared/routes/app_route.dart';
+import 'package:attendance_management_app/shared/services/saved_info_service/domain/repository/saved_info_repo.dart';
+import 'package:attendance_management_app/shared/services/saved_info_service/providers/saved_info_provider.dart';
 import 'package:attendance_management_app/shared/utilities/app_colors.dart';
+import 'package:attendance_management_app/shared/utilities/app_strings.dart';
 import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:attendance_management_app/shared/widgets/custom_text.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../shared/widgets/general_button.dart';
 
-class LogoutModal extends StatelessWidget {
-  static show(context) {
+class LogoutModal extends ConsumerStatefulWidget {
+  static show(context, WidgetRef ref) {
     showModalBottomSheet(
         backgroundColor: Colors.white,
         context: context,
@@ -16,21 +20,27 @@ class LogoutModal extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30))),
         builder: (context) {
-          return const LogoutModal._(
-              //saveFunction: saveFunction,
+          return LogoutModal._(
+              ref: ref,
               );
         });
   }
 
   const LogoutModal._({
-    Key? key,
+    Key? key, required this.ref,
     //required this.saveFunction,
   }) : super(key: key);
 
-  //final void Function() saveFunction;
+  final WidgetRef ref;
 
   @override
+  ConsumerState<LogoutModal> createState() => _LogoutModalState();
+}
+
+class _LogoutModalState extends ConsumerState<LogoutModal> {
+@override
   Widget build(BuildContext context) {
+    SavedInfoService savedInfo = widget.ref.read(savedInfoServiceMethodsProvider);
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -69,8 +79,11 @@ class LogoutModal extends StatelessWidget {
                         textColor: AppColors.appRed,
                         buttonColor: Colors.white,
                         border: Border.all(color: AppColors.appRed),
-                        onPressed: () {
-                          context.router.replaceAll([const LoginRoute()]);
+                        onPressed: () async {
+                          await savedInfo.removeInfo(AppStrings.USER_JSON_KEY);
+                          await savedInfo.removeInfo(AppStrings.AUTH_TOKEN_KEY);
+                          if(!mounted) return;
+                          context.router.replaceAll([LoginRoute()]);
                         }),
                   ),
                 ],
