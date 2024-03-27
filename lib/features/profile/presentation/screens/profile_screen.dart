@@ -1,6 +1,9 @@
-import 'package:attendance_management_app/features/home/domain/model/upcoming_class_model.dart';
-import 'package:attendance_management_app/features/home/presentation/providers/upcoming_class_provider.dart';
+import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
 import 'package:attendance_management_app/features/profile/presentation/widgets/logout_modal.dart';
+import 'package:attendance_management_app/shared/routes/app_route.dart';
+import 'package:attendance_management_app/shared/services/saved_info_service/domain/repository/saved_info_repo.dart';
+import 'package:attendance_management_app/shared/services/saved_info_service/providers/saved_info_provider.dart';
+import 'package:attendance_management_app/shared/utilities/app_strings.dart';
 import 'package:attendance_management_app/shared/widgets/custom_bottom_navbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +14,34 @@ import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 
 @RoutePage()
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<UpcomingClassModel>> activity =
-        ref.watch(upcomingClassProvider);
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  UserAccount? user;
+
+  @override
+  void initState() {
+    initialSetup();
+    super.initState();
+  }
+
+  Future<void> initialSetup() async {
+    SavedInfoService savedInfo = ref.read(savedInfoServiceMethodsProvider);
+    Map<String, dynamic>? fetchedUser = await savedInfo
+        .getInfo(AppStrings.USER_JSON_KEY) as Map<String, dynamic>;
+    setState(() {
+      user = UserAccount.fromJson(fetchedUser);
+    });
+    print(user);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
         prefixIcon: null,
@@ -46,14 +70,15 @@ class ProfileScreen extends ConsumerWidget {
                         ),
                       ),
                       verticalSpace(20),
-                      const CustomText(
-                        title: "Dr. Awosanya Adeagbo",
+                      CustomText(
+                        title:
+                            "${user?.profile?.title}. ${user?.profile?.lastName} ${user?.profile?.firstName}",
                         size: 24,
                         weight: FontWeight.w500,
                       ),
                       verticalSpace(8),
-                      const CustomText(
-                        title: "Associate Professor",
+                      CustomText(
+                        title: "${user?.profile?.user!.roles![0]}",
                         size: 14,
                         weight: FontWeight.w500,
                         color: AppColors.medium300,
@@ -73,7 +98,7 @@ class ProfileScreen extends ConsumerWidget {
                     children: [
                       ListTile(
                         onTap: () {
-                          context.navigateNamedTo("/edit-profile");
+                          context.navigateTo(EditProfileRoute(user: user!));
                         },
                         leading: const Icon(
                           Icons.person,
@@ -121,7 +146,7 @@ class ProfileScreen extends ConsumerWidget {
                       verticalSpace(24),
                       ListTile(
                         onTap: () {
-                          LogoutModal.show(context);
+                          LogoutModal.show(context, ref);
                         },
                         leading: const Icon(
                           Icons.logout_rounded,
