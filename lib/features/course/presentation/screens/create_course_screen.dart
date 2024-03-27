@@ -1,14 +1,20 @@
+import 'package:attendance_management_app/features/course/domain/providers/course_repo_provider.dart';
+import 'package:attendance_management_app/features/course/presentation/providers/fetch_courses_provider.dart';
+import 'package:attendance_management_app/shared/utilities/validator.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
+import '../../../../shared/services/dio_service/domain/models/api_response_model.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
+import '../../../../shared/utilities/toast_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 import '../../../../shared/widgets/custom_text_form_field.dart';
+import '../../../../shared/widgets/dialogs/loading_dialog.dart';
+import '../../domain/repository/course_repo.dart';
 
 @RoutePage()
 class CreateCourseScreen extends ConsumerStatefulWidget {
@@ -23,7 +29,11 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
   String? courseUnitValue;
   DateTime? selectedDate;
   final TextEditingController courseTitleController = TextEditingController();
+  final TextEditingController courseDescriptionController =
+      TextEditingController();
   final TextEditingController courseCodeController = TextEditingController();
+  final TextEditingController sessionController = TextEditingController();
+  final TextEditingController attendanceController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TimeOfDay? time;
 
@@ -44,6 +54,37 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
     ) as TimeOfDay;
 
     setState(() {});
+  }
+
+  Future createCourse() async {
+    Map<String, dynamic> data = {
+      "title": courseTitleController.text,
+      "course_code": courseCodeController.text,
+      "category": courseRequirementValue?.toLowerCase(),
+      "unit": int.tryParse(courseUnitValue!),
+      "session": sessionController.text,
+      "min_attendance_percentage":
+          attendanceController.text.isEmpty ? 70 : attendanceController.text,
+      "description": courseDescriptionController.text
+    };
+
+    print(data);
+    CourseRepository courseService = ref.watch(courseRepoProvider);
+    try {
+      LoadingDialog.show(context);
+      var _ = await courseService.createCourse(data);
+
+      if (!mounted) return;
+      context.router.pop();
+      ref.invalidate(fetchCourseProvider);
+
+      ToastService.success(context, "course created", seconds: 2);
+    } on ErrorResponse catch (exception, _) {
+      context.router.pop();
+
+      print(exception.exception);
+      ToastService.error(context, exception.exception.error.toString());
+    }
   }
 
   @override
@@ -70,7 +111,19 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
             padding: const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
             child: GeneralButton(
               buttonText: 'Create course',
-              onPressed: () {},
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  // Do something with the validated and saved values
+                  if (courseRequirementValue == null) {
+                    ToastService.error(context, "select course requirement");
+                  } else if (courseUnitValue == null) {
+                    ToastService.error(context, "select course unit");
+                  } else {
+                    createCourse();
+                  }
+                }
+              },
             ),
           ),
           body: SingleChildScrollView(
@@ -119,6 +172,20 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
                         CustomTextFormField(
                           hintText: "Enter course title",
                           controller: courseTitleController,
+                          validator: (val) => Validator.validateName(val),
+                        ),
+                        verticalSpace(18),
+                        const CustomText(
+                          title: "Course description",
+                          size: 14,
+                          weight: FontWeight.w400,
+                        ),
+                        verticalSpace(8),
+                        CustomTextFormField(
+                          hintText: "Enter course description",
+                          controller: courseDescriptionController,
+                          validator: (val) =>
+                              Validator.validateEmptyOrMaxiMin(val, 1, 200),
                         ),
                         verticalSpace(18),
                         const CustomText(
@@ -130,6 +197,7 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
                         CustomTextFormField(
                           hintText: "Enter course code",
                           controller: courseCodeController,
+                          validator: (val) => Validator.validateName(val),
                         ),
                         verticalSpace(18),
                         const CustomText(
@@ -203,6 +271,18 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
                         ),
                         verticalSpace(18),
                         const CustomText(
+                          title: "Academic Session",
+                          size: 14,
+                          weight: FontWeight.w400,
+                        ),
+                        verticalSpace(8),
+                        CustomTextFormField(
+                          hintText: "2024/2025",
+                          controller: sessionController,
+                          validator: (val) => Validator.validateName(val),
+                        ),
+                        verticalSpace(18),
+                        const CustomText(
                           title: "Minimum attendance requirement",
                           size: 14,
                           weight: FontWeight.w400,
@@ -210,7 +290,10 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
                         verticalSpace(8),
                         CustomTextFormField(
                           hintText: "70%",
-                          controller: courseCodeController,
+                          controller: attendanceController,
+                          keyboardType: TextInputType.number,
+                          validator: (val) => Validator.validateNumberRange(
+                              double.tryParse(val!), 0, 100),
                         ),
                         verticalSpace(18),
                         Row(
@@ -229,68 +312,6 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
                             )
                           ],
                         )
-                        /*const CustomText(
-                          title: "Date",
-                          size: 14,
-                          weight: FontWeight.w400,
-                        ),
-                        verticalSpace(8),
-                        GestureDetector(
-                          onTap: () {
-                            selectDate(context);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.medium200),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomText(
-                                  title: selectedDate == null
-                                      ? "Select date"
-                                      : DateFormat("d/M/y")
-                                          .format(selectedDate!),
-                                ),
-                                const Icon(Icons.keyboard_arrow_down),
-                              ],
-                            ),
-                          ),
-                        ),
-                        verticalSpace(18),
-                        const CustomText(
-                          title: "Time",
-                          size: 14,
-                          weight: FontWeight.w400,
-                        ),
-                        verticalSpace(8),
-                        GestureDetector(
-                          onTap: () {
-                            selectTime(context);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.medium200),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomText(
-                                  title: time == null
-                                      ? "Select time"
-                                      : DateFormat.jm().format(DateTime.now()
-                                          .copyWith(
-                                              hour: time!.hour,
-                                              minute: time!.minute)),
-                                ),
-                                const Icon(Icons.keyboard_arrow_down),
-                              ],
-                            ),
-                          ),
-                        ),
-                        verticalSpace(18),*/
                       ],
                     ),
                   ),
