@@ -1,4 +1,5 @@
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
+import 'package:attendance_management_app/shared/services/fcm_service/providers/fcm_provider.dart';
 import 'package:attendance_management_app/shared/utilities/validator.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
@@ -34,14 +35,29 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  String? fcmToken;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchToken();
+    setState(() {});
+  }
+
+  Future<void> fetchToken() async {
+    fcmToken = await ref.read(fcmServiceMethodsProvider).fetchAndSaveFcmToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     UserType userType = ref.watch(loginUserTypeProvider);
+
     Future signIn() async {
       Map<String, dynamic> data = {
         "emailOrUsername": widget.emailController.text,
         "password": widget.passwordController.text,
-        "user_type": userType == UserType.student ? "student" : "lecturer"
+        "user_type": userType == UserType.student ? "student" : "lecturer",
+        "fcm_token": fcmToken
       };
 
       print(data);
@@ -51,12 +67,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         UserAccount user = await authService.login(data);
         ref.read(appUserProvider.notifier).setUserType(user);
         if (!mounted) return;
-        context.router.pop();
+        context.router.pop(); //remove loading dialog
 
         ToastService.success(context, "login successful", seconds: 3);
         context.router.replaceAll([const HomeRoute()]);
       } on ErrorResponse catch (exception, _) {
-        context.router.pop();
+        context.router.pop(); //remove loading dialog
 
         print(exception.exception);
         ToastService.error(context, exception.exception.error.toString());

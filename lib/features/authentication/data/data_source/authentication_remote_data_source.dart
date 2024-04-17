@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
 import 'package:attendance_management_app/features/authentication/presentation/providers/states/user_type_state.dart';
 import 'package:attendance_management_app/shared/core/api_endpoints.dart';
 import 'package:attendance_management_app/shared/services/dio_service/domain/models/api_response_model.dart';
@@ -17,7 +17,7 @@ abstract class AuthDataSource {
 
   Future<UserAccount> login({required Map<String, dynamic> userData});
 
-  Future<UserAccount> authenticate();
+  Future<UserAccount> authenticate(Map<String, dynamic> userData);
 }
 
 class AuthRemoteDataSource implements AuthDataSource {
@@ -84,10 +84,10 @@ class AuthRemoteDataSource implements AuthDataSource {
   }
 
   @override
-  Future<UserAccount> authenticate() async {
+  Future<UserAccount> authenticate(Map<String, dynamic> userData) async {
     try {
       ApiResponseModel<Response, ApiException> response =
-          await apiService.get(ApiEndpoints.authenticate, true, null);
+          await apiService.post(ApiEndpoints.authenticate, userData, true);
 
       switch (response) {
         case SuccessResponse(value: final apiUserModel):
