@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../authentication/domain/models/user_model.dart';
+import '../../../../shared/models/user_model.dart';
 import '../providers/get_enrolled_student_provider.dart';
 
 class CourseReportTab extends ConsumerWidget {
