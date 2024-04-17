@@ -4,11 +4,12 @@
 
 import 'dart:convert';
 
-import '../../../authentication/domain/models/institution_model.dart';
+import '../../../../shared/models/institution_model.dart';
+import '../../../../shared/models/lecturer_model.dart';
 
-Course courseFromJson(String str) => Course.fromJson(json.decode(str));
+List<Course> courseFromJson(String str) => List<Course>.from(json.decode(str).map((x) => Course.fromJson(x)));
 
-String courseToJson(Course data) => json.encode(data.toJson());
+String courseToJson(List<Course> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Course {
   final String? id;
@@ -19,8 +20,10 @@ class Course {
   final String? session;
   final int? minAttendancePercentage;
   final String? description;
+  final List<StudentsEnrollment>? studentsEnrollments;
   final Institution? institution;
   final Lecturer? lecturer;
+  bool? isStudentEnrolled;
 
   Course({
     this.id,
@@ -31,8 +34,10 @@ class Course {
     this.session,
     this.minAttendancePercentage,
     this.description,
+    this.studentsEnrollments,
     this.institution,
     this.lecturer,
+    this.isStudentEnrolled,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
@@ -44,8 +49,10 @@ class Course {
     session: json["session"],
     minAttendancePercentage: json["min_attendance_percentage"],
     description: json["description"],
+    studentsEnrollments: json["studentsEnrollments"] == null ? [] : List<StudentsEnrollment>.from(json["studentsEnrollments"]!.map((x) => StudentsEnrollment.fromJson(x))),
     institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
     lecturer: json["lecturer"] == null ? null : Lecturer.fromJson(json["lecturer"]),
+    isStudentEnrolled: json["is_student_enrolled"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -57,88 +64,33 @@ class Course {
     "session": session,
     "min_attendance_percentage": minAttendancePercentage,
     "description": description,
+    "studentsEnrollments": studentsEnrollments == null ? [] : List<dynamic>.from(studentsEnrollments!.map((x) => x.toJson())),
     "institution": institution?.toJson(),
     "lecturer": lecturer?.toJson(),
+    "is_student_enrolled": isStudentEnrolled,
   };
 }
 
-
-class Lecturer {
+class StudentsEnrollment {
   final String? id;
-  final String? title;
-  final String? firstName;
-  final String? lastName;
-  final String? gender;
-  final String? phoneNumber;
-  final String? department;
-  final String? faculty;
-  final User? user;
-  final Institution? institution;
+  final String? studentId;
+  final String? courseId;
 
-  Lecturer({
+  StudentsEnrollment({
     this.id,
-    this.title,
-    this.firstName,
-    this.lastName,
-    this.gender,
-    this.phoneNumber,
-    this.department,
-    this.faculty,
-    this.user,
-    this.institution,
+    this.studentId,
+    this.courseId,
   });
 
-  factory Lecturer.fromJson(Map<String, dynamic> json) => Lecturer(
+  factory StudentsEnrollment.fromJson(Map<String, dynamic> json) => StudentsEnrollment(
     id: json["id"],
-    title: json["title"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    gender: json["gender"],
-    phoneNumber: json["phone_number"],
-    department: json["department"],
-    faculty: json["faculty"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
+    studentId: json["studentId"],
+    courseId: json["courseId"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "title": title,
-    "first_name": firstName,
-    "last_name": lastName,
-    "gender": gender,
-    "phone_number": phoneNumber,
-    "department": department,
-    "faculty": faculty,
-    "user": user?.toJson(),
-    "institution": institution?.toJson(),
-  };
-}
-
-class User {
-  final String? id;
-  final String? username;
-  final String? email;
-  final List<String>? roles;
-
-  User({
-    this.id,
-    this.username,
-    this.email,
-    this.roles,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    username: json["username"],
-    email: json["email"],
-    roles: json["roles"] == null ? [] : List<String>.from(json["roles"]!.map((x) => x)),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "username": username,
-    "email": email,
-    "roles": roles == null ? [] : List<dynamic>.from(roles!.map((x) => x)),
+    "studentId": studentId,
+    "courseId": courseId,
   };
 }
