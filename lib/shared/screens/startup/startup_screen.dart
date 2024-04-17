@@ -1,6 +1,5 @@
 import 'dart:developer';
-
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
 import 'package:attendance_management_app/features/authentication/domain/providers/auth_repo_provider.dart';
 import 'package:attendance_management_app/features/authentication/domain/repository/auth_repo.dart';
 import 'package:attendance_management_app/shared/providers/app_user_provider.dart';
@@ -55,6 +54,7 @@ class _StartupScreenState extends ConsumerState<StartupScreen> {
     } else {
       String? token =
           await savedInfo.getInfo(AppStrings.AUTH_TOKEN_KEY) as String?;
+
       log(token.toString());
       ref
           .read(appUserProvider.notifier)
@@ -64,7 +64,11 @@ class _StartupScreenState extends ConsumerState<StartupScreen> {
         context.replaceRoute(LoginRoute());
       } else {
         try {
-          await auth.authenticate();
+          String? fcmToken =
+              await savedInfo.getInfo(AppStrings.FCM_TOKEN_KEY) as String?;
+          print('got here');
+          print(fcmToken);
+          await auth.authenticate({"fcm_token": fcmToken!});
           log("token refreshed");
           if (!mounted) return;
           context.router.replaceAll([const HomeRoute()]);
