@@ -2,10 +2,12 @@ import 'package:attendance_management_app/shared/utilities/app_colors.dart';
 import 'package:attendance_management_app/shared/utilities/size_utils.dart';
 import 'package:attendance_management_app/shared/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import '../../domain/model/upcoming_class_model.dart';
+import 'package:intl/intl.dart';
+import '../../../../shared/models/base_model.dart';
+import '../../../../shared/utilities/string_utils.dart';
 
 class UpcomingClassWidget extends StatelessWidget {
-  final UpcomingClassModel model;
+  final Base model;
 
   const UpcomingClassWidget({super.key, required this.model});
 
@@ -31,7 +33,7 @@ class UpcomingClassWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CustomText(
-              title: model.courseTitle,
+              title: model.title,
               size: widthSizer(16, context),
               weight: FontWeight.w500,
               overflow: TextOverflow.ellipsis,
@@ -89,19 +91,20 @@ class UpcomingClassWidget extends StatelessWidget {
               ),
             ],
           )*/
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.access_time_filled_rounded,
                       color: AppColors.medium200,
                     ),
                     CustomText(
-                      title: "08 - 10AM",
+                      title:
+                          "${StringUtils.formatTime(model.startTime.toString())} - ${StringUtils.formatTime(model.endTime.toString())}",
                       size: 14,
                       weight: FontWeight.w500,
                     ),
@@ -109,12 +112,12 @@ class UpcomingClassWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.calendar_month,
                       color: AppColors.medium200,
                     ),
                     CustomText(
-                      title: "15/02",
+                      title: DateFormat('dd/MM').format(model.startDate!),
                       size: 14,
                       weight: FontWeight.w500,
                     ),
@@ -122,12 +125,12 @@ class UpcomingClassWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on,
                       color: AppColors.medium200,
                     ),
                     CustomText(
-                      title: "Online",
+                      title: model.mode,
                       size: 14,
                       weight: FontWeight.w500,
                     )

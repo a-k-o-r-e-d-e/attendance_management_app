@@ -1,10 +1,13 @@
 import 'package:attendance_management_app/shared/services/location_service/domain/repository/location_service_repo.dart';
 import 'package:attendance_management_app/shared/services/location_service/providers/location_provider.dart';
+import 'package:attendance_management_app/shared/utilities/toast_utils.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../shared/services/local_auth_service/domain/repository/local_auth_service_repo.dart';
+import '../../../../shared/services/local_auth_service/providers/local_auth_provider.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
@@ -24,6 +27,8 @@ class StartClassScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final LocationService locationService =
         ref.read(locationServiceMethodsProvider);
+    final LocalAuthService localAuth =
+    ref.watch(localAuthServiceMethodsProvider);
     return Scaffold(
         appBar: CustomAppBar(
           flexibleSpace: Container(
@@ -53,21 +58,27 @@ class StartClassScreen extends ConsumerWidget {
                   buttonText: 'Take attendance',
                   borderRadius: 0,
                   onPressed: () async {
-                    if (await locationService.hasPermission()) {
-                      SetDistanceModal.show(
-                        context,
-                        ref,
-                      );
-                    } else {
-                      bool permitted =
-                          await locationService.requestPermission();
-                      if (permitted) {
+                    if(await localAuth.authenticate()){
+                      if (await locationService.hasPermission()) {
                         SetDistanceModal.show(
                           context,
                           ref,
                         );
+                      } else {
+                        bool permitted =
+                        await locationService.requestPermission();
+                        if (permitted) {
+                          SetDistanceModal.show(
+                            context,
+                            ref,
+                          );
+                        }
                       }
+                    }else{
+                      //if(!mounted) return;
+                      ToastService.error(context, "biometrics is needed for takng attendance");
                     }
+
                   },
                 ),
               ),

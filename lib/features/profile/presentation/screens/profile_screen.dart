@@ -1,47 +1,24 @@
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
 import 'package:attendance_management_app/features/profile/presentation/widgets/logout_modal.dart';
 import 'package:attendance_management_app/shared/routes/app_route.dart';
-import 'package:attendance_management_app/shared/services/saved_info_service/domain/repository/saved_info_repo.dart';
-import 'package:attendance_management_app/shared/services/saved_info_service/providers/saved_info_provider.dart';
-import 'package:attendance_management_app/shared/utilities/app_strings.dart';
 import 'package:attendance_management_app/shared/widgets/custom_bottom_navbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../shared/providers/app_user_provider.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 
 @RoutePage()
-class ProfileScreen extends ConsumerStatefulWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UserAccount user = ref.watch(appUserProvider);
 
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  UserAccount? user;
-
-  @override
-  void initState() {
-    initialSetup();
-    super.initState();
-  }
-
-  Future<void> initialSetup() async {
-    SavedInfoService savedInfo = ref.read(savedInfoServiceMethodsProvider);
-    Map<String, dynamic>? fetchedUser = await savedInfo
-        .getInfo(AppStrings.USER_JSON_KEY) as Map<String, dynamic>;
-    setState(() {
-      user = UserAccount.fromJson(fetchedUser);
-    });
-    print(user);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
         prefixIcon: null,
@@ -72,13 +49,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       verticalSpace(20),
                       CustomText(
                         title:
-                            "${user?.profile?.title}. ${user?.profile?.lastName} ${user?.profile?.firstName}",
+                            "${user.profile?.title}. ${user.profile?.lastName} ${user.profile?.firstName}",
                         size: 24,
                         weight: FontWeight.w500,
                       ),
                       verticalSpace(8),
                       CustomText(
-                        title: "${user?.profile?.user!.roles![0]}",
+                        title: "${user.profile?.user!.roles![0]}",
                         size: 14,
                         weight: FontWeight.w500,
                         color: AppColors.medium300,
@@ -98,7 +75,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     children: [
                       ListTile(
                         onTap: () {
-                          context.navigateTo(EditProfileRoute(user: user!));
+                          context.navigateTo(EditProfileRoute(user: user));
                         },
                         leading: const Icon(
                           Icons.person,

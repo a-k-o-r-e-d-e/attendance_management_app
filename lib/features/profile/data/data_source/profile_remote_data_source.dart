@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
 import 'package:attendance_management_app/shared/core/api_endpoints.dart';
 import 'package:attendance_management_app/shared/services/dio_service/domain/models/api_response_model.dart';
 import 'package:dio/dio.dart';
