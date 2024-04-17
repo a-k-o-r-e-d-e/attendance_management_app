@@ -22,13 +22,13 @@ extension ClassModeX on ClassMode {
   }
 }
 
-enum ClassType { recurring, oneOff }
+enum ClassType { weekly, oneOff }
 
 extension ClassTypeX on ClassType {
   String get nameString {
     switch (this) {
-      case ClassType.recurring:
-        return "Recurring";
+      case ClassType.weekly:
+        return "Weekly";
       case ClassType.oneOff:
         return "One-off";
     }
@@ -36,8 +36,8 @@ extension ClassTypeX on ClassType {
 
   static ClassType getClassTypeFromName(String name) {
     switch (name) {
-      case "Recurring":
-        return ClassType.recurring;
+      case "Weekly":
+        return ClassType.weekly;
       case "One-off":
         return ClassType.oneOff;
       default:
