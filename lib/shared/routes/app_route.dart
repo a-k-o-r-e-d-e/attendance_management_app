@@ -1,4 +1,7 @@
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/features/course/presentation/screens/lecturer_info.dart';
+import 'package:attendance_management_app/shared/models/base_model.dart';
+import 'package:attendance_management_app/shared/models/lecturer_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
 import 'package:attendance_management_app/features/authentication/presentation/screens/create_account_screen.dart';
 import 'package:attendance_management_app/features/authentication/presentation/screens/login_screen.dart';
 import 'package:attendance_management_app/features/authentication/presentation/screens/select_user_type_screen.dart';
@@ -48,5 +51,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ProfileRoute.page, path: "/profile"),
         AutoRoute(page: EditProfileRoute.page, path: "/edit-profile"),
         AutoRoute(page: SettingsRoute.page, path: "/settings"),
+        AutoRoute(page: LecturerInfoRoute.page, path: "/lecturer-info"),
       ];
 }
