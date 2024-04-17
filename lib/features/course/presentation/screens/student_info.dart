@@ -6,7 +6,7 @@ import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
-import '../../../authentication/domain/models/user_model.dart';
+import '../../../../shared/models/user_model.dart';
 
 @RoutePage()
 class StudentInfoScreen extends ConsumerStatefulWidget {

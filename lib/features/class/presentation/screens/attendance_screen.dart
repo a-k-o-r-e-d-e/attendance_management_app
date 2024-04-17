@@ -10,7 +10,7 @@ import '../../../../shared/utilities/size_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 import '../../../../shared/widgets/custom_text_form_field.dart';
-import '../../../authentication/domain/models/user_model.dart';
+import '../../../../shared/models/user_model.dart';
 
 @RoutePage()
 class AttendanceScreen extends ConsumerWidget {

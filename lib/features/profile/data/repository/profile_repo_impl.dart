@@ -1,4 +1,4 @@
-import 'package:attendance_management_app/features/authentication/domain/models/user_model.dart';
+import 'package:attendance_management_app/shared/models/user_model.dart';
 import 'package:attendance_management_app/features/authentication/presentation/providers/states/user_type_state.dart';
 import '../../domain/repository/profile_repo.dart';
 import '../data_source/profile_remote_data_source.dart';

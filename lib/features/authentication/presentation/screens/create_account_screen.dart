@@ -1,4 +1,4 @@
-import 'package:attendance_management_app/features/authentication/domain/models/institution_model.dart';
+import 'package:attendance_management_app/shared/models/institution_model.dart';
 import 'package:attendance_management_app/features/authentication/domain/providers/auth_repo_provider.dart';
 import 'package:attendance_management_app/features/authentication/domain/repository/auth_repo.dart';
 import 'package:attendance_management_app/features/authentication/presentation/providers/create_user_state_provider.dart';
