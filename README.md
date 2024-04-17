@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+### Contact the developer for the firebase config files
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
