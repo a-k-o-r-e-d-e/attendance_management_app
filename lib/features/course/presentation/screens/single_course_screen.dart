@@ -1,13 +1,21 @@
 import 'package:attendance_management_app/features/course/domain/models/course_model.dart';
+import 'package:attendance_management_app/features/home/presentation/providers/available_courses_provider.dart';
 import 'package:attendance_management_app/shared/providers/app_user_provider.dart';
+import 'package:attendance_management_app/shared/routes/app_route.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../shared/services/dio_service/domain/models/api_response_model.dart';
 import '../../../../shared/utilities/app_colors.dart';
 import '../../../../shared/utilities/size_utils.dart';
+import '../../../../shared/utilities/toast_utils.dart';
 import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
+import '../../../../shared/widgets/dialogs/loading_dialog.dart';
+import '../../domain/providers/course_repo_provider.dart';
+import '../../domain/repository/course_repo.dart';
+import '../providers/fetch_courses_provider.dart';
 import '../widgets/class_tab.dart';
 import '../widgets/course_engagement_tab.dart';
 import '../widgets/course_report_tab.dart';
@@ -37,6 +45,60 @@ class _SingleCourseScreenState extends ConsumerState<SingleCourseScreen>
     _controller.addListener(_handleTabSelection);
   }
 
+  Future<void> deleteCourse() async {
+    CourseRepository courseService = ref.watch(courseRepoProvider);
+    try {
+      LoadingDialog.show(context);
+      var _ = await courseService.deleteCourse(widget.course.id!);
+
+      if (!mounted) return;
+      context.router.pop();
+      ref.invalidate(fetchCourseProvider);
+
+      ToastService.success(context, "course deleted", seconds: 2);
+      context.router.back();
+    } on ErrorResponse catch (exception, _) {
+      context.router.pop();
+
+      print(exception.exception);
+      ToastService.error(context, exception.exception.error.toString());
+    }
+  }
+
+  Future<void> enrollCourse() async {
+    CourseRepository courseService = ref.watch(courseRepoProvider);
+    try {
+      LoadingDialog.show(context);
+      if (widget.course.isStudentEnrolled == true) {
+        await courseService.unEnrollCourse(widget.course.id!);
+      } else {
+        await courseService.enrollCourse(widget.course.id!);
+      }
+
+      if (!mounted) return;
+      context.router.pop();
+      ref.invalidate(getAvailableCoursesProvider);
+      setState(() {
+        if (widget.course.isStudentEnrolled == null) {
+          widget.course.isStudentEnrolled = true;
+        } else {
+          widget.course.isStudentEnrolled = !(widget.course.isStudentEnrolled!);
+        }
+      });
+      ToastService.success(
+          context,
+          widget.course.isStudentEnrolled == true
+              ? "course enrolled successfully"
+              : "course unenrolled successfully",
+          seconds: 2);
+    } on ErrorResponse catch (exception, _) {
+      context.router.pop();
+
+      print(exception.exception);
+      ToastService.error(context, exception.exception.error.toString());
+    }
+  }
+
   _handleTabSelection() {
     setState(() {
       _currentIndex = _controller.index;
@@ -63,6 +125,33 @@ class _SingleCourseScreenState extends ConsumerState<SingleCourseScreen>
                   context.back();
                 },
                 child: const Icon(Icons.keyboard_arrow_left_rounded)),
+            suffixIcon: appUser == "lecturer"
+                ? PopupMenuButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    color: Colors.white,
+                    child: const Icon(
+                      Icons.more_vert,
+                      color: AppColors.appDark700,
+                      size: 24,
+                    ),
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      PopupMenuItem(
+                        child: const Text('Edit Course'),
+                        onTap: () {
+                          context.navigateTo(
+                              CreateCourseRoute(editCourse: widget.course));
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: const Text('Delete Course'),
+                        onTap: () {
+                          deleteCourse();
+                        },
+                      ),
+                    ],
+                  )
+                : null,
           ),
           backgroundColor: Colors.white,
           bottomNavigationBar: Padding(
@@ -70,17 +159,22 @@ class _SingleCourseScreenState extends ConsumerState<SingleCourseScreen>
             child: Visibility(
               visible: appUser == "lecturer",
               replacement: GeneralButton(
-                buttonText: 'Enrol for this course',
+                buttonText: widget.course.isStudentEnrolled == true
+                    ? 'Unenroll for this course'
+                    : 'Enrol for this course',
                 borderRadius: 0,
                 onPressed: () {
-                  context.router.navigateNamed("/create-class");
+                  enrollCourse();
                 },
               ),
               child: GeneralButton(
                 buttonText: 'Add a class',
                 borderRadius: 0,
                 onPressed: () {
-                  //context.router.navigateNamed("/create-class");
+                  context.router.navigate(CreateClassRoute(
+                      courseId: widget.course.id!,
+                      editClass: null,
+                      courseTitle: widget.course.title));
                 },
               ),
             ),
@@ -194,7 +288,7 @@ class _SingleCourseScreenState extends ConsumerState<SingleCourseScreen>
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _controller,
                 children: [
-                  const ClassTab(),
+                  ClassTab(courseId: widget.course.id!),
                   Visibility(
                     visible: appUser == "lecturer",
                     replacement: const CourseEngagementTab(),
