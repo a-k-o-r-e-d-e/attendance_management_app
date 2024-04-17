@@ -1,5 +1,6 @@
 import 'package:attendance_management_app/features/course/domain/providers/course_repo_provider.dart';
 import 'package:attendance_management_app/features/course/presentation/providers/fetch_courses_provider.dart';
+import 'package:attendance_management_app/shared/utilities/string_utils.dart';
 import 'package:attendance_management_app/shared/utilities/validator.dart';
 import 'package:attendance_management_app/shared/widgets/general_button.dart';
 import 'package:auto_route/auto_route.dart';
@@ -14,11 +15,14 @@ import '../../../../shared/widgets/custom_appbar.dart';
 import '../../../../shared/widgets/custom_text.dart';
 import '../../../../shared/widgets/custom_text_form_field.dart';
 import '../../../../shared/widgets/dialogs/loading_dialog.dart';
+import '../../domain/models/course_model.dart';
 import '../../domain/repository/course_repo.dart';
 
 @RoutePage()
 class CreateCourseScreen extends ConsumerStatefulWidget {
-  const CreateCourseScreen({super.key});
+  final Course? editCourse;
+
+  const CreateCourseScreen({super.key, this.editCourse});
 
   @override
   ConsumerState<CreateCourseScreen> createState() => _CreateCourseScreenState();
@@ -35,28 +39,10 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
   final TextEditingController sessionController = TextEditingController();
   final TextEditingController attendanceController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TimeOfDay? time;
-
-  void selectDate(BuildContext context) async {
-    selectedDate = (await showDatePicker(
-        context: context,
-        initialDate: null,
-        firstDate: DateTime.now().add(const Duration(days: 1)),
-        lastDate: DateTime.now().add(const Duration(days: 14))))!;
-
-    setState(() {});
-  }
-
-  void selectTime(BuildContext context) async {
-    time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ) as TimeOfDay;
-
-    setState(() {});
-  }
 
   Future createCourse() async {
+    int? minAttendance = int.tryParse(attendanceController.text);
+
     Map<String, dynamic> data = {
       "title": courseTitleController.text,
       "course_code": courseCodeController.text,
@@ -64,7 +50,9 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
       "unit": int.tryParse(courseUnitValue!),
       "session": sessionController.text,
       "min_attendance_percentage":
-          attendanceController.text.isEmpty ? 70 : attendanceController.text,
+          attendanceController.text.isEmpty || minAttendance == null
+              ? 70
+              : minAttendance,
       "description": courseDescriptionController.text
     };
 
@@ -72,13 +60,21 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
     CourseRepository courseService = ref.watch(courseRepoProvider);
     try {
       LoadingDialog.show(context);
-      var _ = await courseService.createCourse(data);
-
+      if (widget.editCourse == null) {
+        await courseService.createCourse(data);
+      } else {
+        await courseService.editCourse(widget.editCourse!.id!, data);
+      }
       if (!mounted) return;
       context.router.pop();
       ref.invalidate(fetchCourseProvider);
 
-      ToastService.success(context, "course created", seconds: 2);
+      ToastService.success(
+          context,
+          widget.editCourse == null
+              ? "course created successfully"
+              : "Course edited successfully",
+          seconds: 2);
     } on ErrorResponse catch (exception, _) {
       context.router.pop();
 
@@ -88,12 +84,29 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.editCourse == null) {
+    } else {
+      courseTitleController.text = widget.editCourse!.title!;
+      courseDescriptionController.text = widget.editCourse!.description!;
+      courseCodeController.text = widget.editCourse!.courseCode!;
+      sessionController.text = widget.editCourse!.session!;
+      attendanceController.text =
+          widget.editCourse!.minAttendancePercentage!.toString();
+      courseRequirementValue =
+          StringUtils.capitalize(widget.editCourse!.category!);
+      courseUnitValue = widget.editCourse!.unit.toString();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
           centerTitle: true,
-          title: 'Create course',
+          title: widget.editCourse == null ? 'Create course' : 'Edit Course',
           showBorder: true,
           prefixIcon: InkWell(
               onTap: () {
@@ -110,7 +123,8 @@ class _CreateCourseScreenState extends ConsumerState<CreateCourseScreen> {
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
             child: GeneralButton(
-              buttonText: 'Create course',
+              buttonText:
+                  widget.editCourse == null ? 'Create course' : 'Edit Course',
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
