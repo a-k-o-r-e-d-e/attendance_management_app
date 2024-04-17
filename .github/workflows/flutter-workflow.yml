@@ -5,9 +5,7 @@ on:
   # Runs this action when you push on master
   push:
     branches: [ "master" ]
-  # Runs this when a PR against master is created
-  pull_request:
-    branches: [ "master" ]
+
 
 jobs:
   flutter_job:
@@ -42,7 +40,7 @@ jobs:
       
       # Verifies if the dart code is formatted well
       - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
+        run: flutter format --output=none --set-exit-if-changed .
         # --set-exit-if-changed stops execution if the any code is not well formatted
         # --output=none prints files which needs to be formatted
       
