@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../../../utilities/app_strings.dart';
@@ -121,7 +123,7 @@ class ApiServiceImpl extends ApiService {
   ApiException handleError(DioException error) {
     String errorMessage;
     // Check if error.response is null
-    print(error.response!.data["message"]);
+    log(error.response?.data["message"]);
     if (error.response == null) {
       return ApiException("Network request failed", -1);
     }
