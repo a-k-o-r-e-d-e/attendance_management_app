@@ -12,7 +12,10 @@ class ApiServiceImpl extends ApiService {
   final Dio _dio;
   final SavedInfoService _savedInfo;
 
-  ApiServiceImpl(this._dio, this._savedInfo,);
+  ApiServiceImpl(
+    this._dio,
+    this._savedInfo,
+  );
 
   @override
   Future<String?> fetchToken() async {
@@ -34,8 +37,7 @@ class ApiServiceImpl extends ApiService {
       }
     }
     try {
-      Response response = await _dio
-          .post(endPoint, data: data);
+      Response response = await _dio.post(endPoint, data: data);
       // Handle the response
 
       return SuccessResponse(response);
@@ -57,8 +59,7 @@ class ApiServiceImpl extends ApiService {
       }
     }
     try {
-      Response response = await _dio
-          .get(endPoint, queryParameters: query);
+      Response response = await _dio.get(endPoint, queryParameters: query);
       // Handle the response
 
       return SuccessResponse(response);
@@ -84,8 +85,7 @@ class ApiServiceImpl extends ApiService {
       }
     }
     try {
-      Response response = await _dio
-          .put(endPoint, data: data);
+      Response response = await _dio.put(endPoint, data: data);
       // Handle the response
 
       return SuccessResponse(response);
@@ -108,8 +108,7 @@ class ApiServiceImpl extends ApiService {
       }
     }
     try {
-      Response response = await _dio
-          .delete(endPoint, data: data);
+      Response response = await _dio.delete(endPoint, data: data);
       // Handle the response
 
       return SuccessResponse(response);

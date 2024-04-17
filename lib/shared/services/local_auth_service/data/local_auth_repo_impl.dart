@@ -33,7 +33,7 @@ class LocalAuthServiceImpl extends LocalAuthService {
           options: const AuthenticationOptions(biometricOnly: true));
       return didAuthenticate;
       // ···
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       log(e.toString());
       return false;
     }

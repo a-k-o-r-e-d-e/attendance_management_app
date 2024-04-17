@@ -6,7 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'get_course_classes_provider.g.dart';
 
 @Riverpod()
-Future<List<CourseClassesModel>> getCourseClasses(GetCourseClassesRef ref, String courseId) async {
+Future<List<CourseClassesModel>> getCourseClasses(
+    GetCourseClassesRef ref, String courseId) async {
   final CourseRepository courseRepo = ref.read(courseRepoProvider);
   return await courseRepo.getCourseClasses(courseId);
 }

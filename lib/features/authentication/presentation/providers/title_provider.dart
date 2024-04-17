@@ -5,7 +5,6 @@ part 'title_provider.g.dart';
 
 @riverpod
 class TitleType extends _$TitleType {
-
   @override
   TitleEnum build() {
     return TitleEnum.none;

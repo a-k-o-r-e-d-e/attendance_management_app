@@ -5,7 +5,6 @@ part 'create_user_state_provider.g.dart';
 
 @riverpod
 class CreateAccountUserType extends _$CreateAccountUserType {
-
   @override
   UserType build() {
     return UserType.none;

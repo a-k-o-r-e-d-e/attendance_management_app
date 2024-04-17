@@ -3,7 +3,6 @@ import 'package:attendance_management_app/shared/services/saved_info_service/dom
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-
 part 'saved_info_provider.g.dart';
 
 @riverpod

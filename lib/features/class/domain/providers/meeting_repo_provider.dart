@@ -3,7 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/providers/meeting_data_provider.dart';
 
-
 part 'meeting_repo_provider.g.dart';
 
 @riverpod

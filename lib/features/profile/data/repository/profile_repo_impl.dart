@@ -19,7 +19,8 @@ class ProfileRepositoryImpl extends ProfileRepository {
   }
 
   @override
-  Future<Profile> updateProfile(UserType userType, Map<String, dynamic> userData) {
+  Future<Profile> updateProfile(
+      UserType userType, Map<String, dynamic> userData) {
     return dataSource.updateProfile(userType, userData);
   }
 }

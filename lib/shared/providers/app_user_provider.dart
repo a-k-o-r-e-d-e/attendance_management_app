@@ -9,6 +9,7 @@ class AppUser extends _$AppUser {
   UserAccount build() {
     return UserAccount();
   }
+
   void setUserType(UserAccount user) {
     state = user;
   }

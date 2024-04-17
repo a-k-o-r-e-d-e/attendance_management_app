@@ -1,4 +1,1 @@
-
-class MeetingRepoImpl {
-
-}
+class MeetingRepoImpl {}

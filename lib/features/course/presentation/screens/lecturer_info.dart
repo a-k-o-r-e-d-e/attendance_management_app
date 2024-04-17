@@ -151,7 +151,6 @@ class LecturerInfoScreen extends ConsumerWidget {
               ],
             ),
           ),
-
         ],
       ),
     );

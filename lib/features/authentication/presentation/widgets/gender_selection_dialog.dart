@@ -60,17 +60,18 @@ class SelectGenderDialog extends ConsumerWidget {
             ListView.separated(
                 shrinkWrap: true,
                 controller: ScrollController(),
-                itemCount: GenderEnum.values.length-1,
+                itemCount: GenderEnum.values.length - 1,
                 separatorBuilder: (_, __) => const SizedBox(height: 0),
                 itemBuilder: (context, index) => RadioListTile(
-                  contentPadding: EdgeInsets.zero,
-                  activeColor: const Color(0xFF25314C),
+                      contentPadding: EdgeInsets.zero,
+                      activeColor: const Color(0xFF25314C),
                       title: CustomText(
-                        title: StringUtils.capitalize(GenderEnum.values[index+1].name),
+                        title: StringUtils.capitalize(
+                            GenderEnum.values[index + 1].name),
                         size: 16,
                         weight: FontWeight.w500,
                       ),
-                      value: GenderEnum.values[index+1],
+                      value: GenderEnum.values[index + 1],
                       groupValue: gender,
                       onChanged: (value) {
                         ref.read(genderTypeProvider.notifier).setGender(value!);

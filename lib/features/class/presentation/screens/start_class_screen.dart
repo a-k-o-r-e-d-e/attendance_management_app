@@ -28,7 +28,7 @@ class StartClassScreen extends ConsumerWidget {
     final LocationService locationService =
         ref.read(locationServiceMethodsProvider);
     final LocalAuthService localAuth =
-    ref.watch(localAuthServiceMethodsProvider);
+        ref.watch(localAuthServiceMethodsProvider);
     return Scaffold(
         appBar: CustomAppBar(
           flexibleSpace: Container(
@@ -58,7 +58,7 @@ class StartClassScreen extends ConsumerWidget {
                   buttonText: 'Take attendance',
                   borderRadius: 0,
                   onPressed: () async {
-                    if(await localAuth.authenticate()){
+                    if (await localAuth.authenticate()) {
                       if (await locationService.hasPermission()) {
                         SetDistanceModal.show(
                           context,
@@ -66,7 +66,7 @@ class StartClassScreen extends ConsumerWidget {
                         );
                       } else {
                         bool permitted =
-                        await locationService.requestPermission();
+                            await locationService.requestPermission();
                         if (permitted) {
                           SetDistanceModal.show(
                             context,
@@ -74,11 +74,11 @@ class StartClassScreen extends ConsumerWidget {
                           );
                         }
                       }
-                    }else{
+                    } else {
                       //if(!mounted) return;
-                      ToastService.error(context, "biometrics is needed for takng attendance");
+                      ToastService.error(
+                          context, "biometrics is needed for takng attendance");
                     }
-
                   },
                 ),
               ),

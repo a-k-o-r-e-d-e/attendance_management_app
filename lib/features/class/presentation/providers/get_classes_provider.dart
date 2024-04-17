@@ -7,7 +7,8 @@ import '../../domain/models/upcoming_class_model.dart';
 part 'get_classes_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<List<UpcomingClassModel>> getClasses(GetClassesRef ref, UserType userType) async {
+Future<List<UpcomingClassModel>> getClasses(
+    GetClassesRef ref, UserType userType) async {
   final ClassRepository classRepo = ref.read(classRepoProvider);
   return await classRepo.fetchClasses(userType);
 }

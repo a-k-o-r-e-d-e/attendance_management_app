@@ -5,7 +5,6 @@ part 'gender_provider.g.dart';
 
 @riverpod
 class GenderType extends _$GenderType {
-
   @override
   GenderEnum build() {
     return GenderEnum.none;

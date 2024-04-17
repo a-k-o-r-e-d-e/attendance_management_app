@@ -10,7 +10,10 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/widgets/general_button.dart';
 
 class SetDistanceModal extends StatelessWidget {
-  static show(context, WidgetRef ref,) {
+  static show(
+    context,
+    WidgetRef ref,
+  ) {
     showModalBottomSheet(
         backgroundColor: Colors.white,
         context: context,
@@ -88,7 +91,7 @@ class SetDistanceModal extends StatelessWidget {
                     child: GeneralButton(
                         buttonText: 'Save, continue',
                         borderRadius: 200,
-                        onPressed: (){
+                        onPressed: () {
                           context.router.pop();
                           context.navigateNamedTo('/attendance');
                         }),

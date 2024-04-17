@@ -24,7 +24,6 @@ class OnboardingScreen extends ConsumerWidget {
         child: GeneralButton(
           buttonText: "Get started",
           onPressed: () {
-
             //context.replaceRoute(const SelectUserTypeRoute());
             context.router.replaceNamed("/select-user-type");
           },

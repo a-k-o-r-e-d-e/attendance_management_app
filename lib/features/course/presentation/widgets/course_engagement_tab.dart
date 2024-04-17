@@ -40,8 +40,8 @@ class CourseEngagementTab extends StatelessWidget {
                   "assets/svgs/course.svg",
                   width: 56,
                   height: 56,
-                  colorFilter:
-                      const ColorFilter.mode(AppColors.appLight30, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(
+                      AppColors.appLight30, BlendMode.srcIn),
                 ),
                 verticalSpace(32),
                 const CustomText(
