@@ -30,7 +30,6 @@ class ClassScheduleBottomSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       height: screenHeight(context) / 2,
-
     );
   }
 }

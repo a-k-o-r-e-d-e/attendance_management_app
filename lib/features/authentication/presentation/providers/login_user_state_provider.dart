@@ -5,7 +5,6 @@ part 'login_user_state_provider.g.dart';
 
 @riverpod
 class LoginUserType extends _$LoginUserType {
-
   @override
   UserType build() {
     return UserType.none;

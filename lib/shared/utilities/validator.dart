@@ -74,7 +74,7 @@ class Validator {
   }
 
   static String? validateNumberRange(double? fund, int min, int max) {
-    if(fund == null){
+    if (fund == null) {
       return null;
     }
     if (fund < min || fund > max) {

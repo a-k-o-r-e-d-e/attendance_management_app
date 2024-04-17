@@ -21,13 +21,14 @@ class LogoutModal extends ConsumerStatefulWidget {
                 topLeft: Radius.circular(30), topRight: Radius.circular(30))),
         builder: (context) {
           return LogoutModal._(
-              ref: ref,
-              );
+            ref: ref,
+          );
         });
   }
 
   const LogoutModal._({
-    Key? key, required this.ref,
+    Key? key,
+    required this.ref,
     //required this.saveFunction,
   }) : super(key: key);
 
@@ -38,9 +39,10 @@ class LogoutModal extends ConsumerStatefulWidget {
 }
 
 class _LogoutModalState extends ConsumerState<LogoutModal> {
-@override
+  @override
   Widget build(BuildContext context) {
-    SavedInfoService savedInfo = widget.ref.read(savedInfoServiceMethodsProvider);
+    SavedInfoService savedInfo =
+        widget.ref.read(savedInfoServiceMethodsProvider);
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -82,7 +84,7 @@ class _LogoutModalState extends ConsumerState<LogoutModal> {
                         onPressed: () async {
                           await savedInfo.removeInfo(AppStrings.USER_JSON_KEY);
                           await savedInfo.removeInfo(AppStrings.AUTH_TOKEN_KEY);
-                          if(!mounted) return;
+                          if (!mounted) return;
                           context.router.replaceAll([LoginRoute()]);
                         }),
                   ),

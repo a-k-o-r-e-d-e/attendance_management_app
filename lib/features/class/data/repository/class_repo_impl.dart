@@ -27,6 +27,5 @@ class ClassRepoImpl extends ClassRepository {
   @override
   Future<bool> editClass(String id, Map<String, dynamic> data) {
     return dataSource.editClass(id, data);
-
   }
 }

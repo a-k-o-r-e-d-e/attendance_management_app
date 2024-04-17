@@ -15,13 +15,14 @@ class ApiEndpoints {
   static const String getStudentProfileById = "${baseUrl}students";
   static const String getStudentProfile = "${baseUrl}students/me";
   static const String getStudentCourses = "${baseUrl}students/me/courses";
-  static const String getStudentClasses = "${baseUrl}students/me/classes/instances";
+  static const String getStudentClasses =
+      "${baseUrl}students/me/classes/instances";
 
   static const String getLecturerCourses = "${baseUrl}lecturers/me/courses";
-  static const String getLecturerClasses = "${baseUrl}lecturers/me/classes/instances";
+  static const String getLecturerClasses =
+      "${baseUrl}lecturers/me/classes/instances";
   static const String getCourses = "${baseUrl}courses";
   static const String searchCourses = "${baseUrl}courses/search";
 
   static const String classes = "${baseUrl}classes";
-
 }

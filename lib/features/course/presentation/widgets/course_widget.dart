@@ -46,8 +46,7 @@ class CourseWidget extends StatelessWidget {
               children: [
                 SvgPicture.asset("assets/svgs/class_card.svg"),
                 CustomText(
-                  title:
-                      " 0 Classes has been added to this course",
+                  title: " 0 Classes has been added to this course",
                   size: widthSizer(14, context),
                   weight: FontWeight.w500,
                 ),

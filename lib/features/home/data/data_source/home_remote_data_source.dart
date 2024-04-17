@@ -18,9 +18,7 @@ class HomeRepoDataSource extends HomeDataSource {
     /*return api.get("endPoint", true);*/
     return Future.delayed(
         const Duration(seconds: 3),
-        () => SuccessResponse(Response(data: [
-              UpcomingClassModel(
-                  )
-            ], requestOptions: RequestOptions())));
+        () => SuccessResponse(Response(
+            data: [UpcomingClassModel()], requestOptions: RequestOptions())));
   }
 }

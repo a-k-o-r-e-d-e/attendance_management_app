@@ -25,7 +25,7 @@ class OnBoardingPage extends StatelessWidget {
             width: double.infinity,
             child: index == 1
                 ? SvgPicture.asset("assets/svgs/onboarding-$index.svg",
-                fit: BoxFit.scaleDown)
+                    fit: BoxFit.scaleDown)
                 : Image.asset("assets/images/onboarding-$index.png"),
           ),
         ),

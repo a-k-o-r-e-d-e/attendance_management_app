@@ -7,7 +7,6 @@ part 'meeting_data_provider.g.dart';
 class MeetingData extends _$MeetingData {
   @override
   MeetingDataSourceRepository build() {
-
     return MeetingDataSource();
   }
 // Add methods to mutate the state

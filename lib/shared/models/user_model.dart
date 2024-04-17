@@ -6,7 +6,8 @@ import 'dart:convert';
 
 import 'institution_model.dart';
 
-UserAccount userAccountFromJson(String str) => UserAccount.fromJson(json.decode(str));
+UserAccount userAccountFromJson(String str) =>
+    UserAccount.fromJson(json.decode(str));
 
 String userAccountToJson(UserAccount data) => json.encode(data.toJson());
 
@@ -20,14 +21,15 @@ class UserAccount {
   });
 
   factory UserAccount.fromJson(Map<String, dynamic> json) => UserAccount(
-    accessToken: json["access_token"],
-    profile: json["profile"] == null ? null : Profile.fromJson(json["profile"]),
-  );
+        accessToken: json["access_token"],
+        profile:
+            json["profile"] == null ? null : Profile.fromJson(json["profile"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "access_token": accessToken,
-    "profile": profile?.toJson(),
-  };
+        "access_token": accessToken,
+        "profile": profile?.toJson(),
+      };
 }
 
 class Profile {
@@ -58,32 +60,34 @@ class Profile {
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
-    id: json["id"],
-    title: json["title"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    gender: json["gender"],
-    phoneNumber: json["phone_number"],
-    department: json["department"],
-    faculty: json["faculty"],
-    matricNo: json["matric_no"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
-  );
+        id: json["id"],
+        title: json["title"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        gender: json["gender"],
+        phoneNumber: json["phone_number"],
+        department: json["department"],
+        faculty: json["faculty"],
+        matricNo: json["matric_no"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        institution: json["institution"] == null
+            ? null
+            : Institution.fromJson(json["institution"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "first_name": firstName,
-    "last_name": lastName,
-    "gender": gender,
-    "phone_number": phoneNumber,
-    "department": department,
-    "faculty": faculty,
-    "matric_no": matricNo,
-    "user": user?.toJson(),
-    "institution": institution?.toJson(),
-  };
+        "id": id,
+        "title": title,
+        "first_name": firstName,
+        "last_name": lastName,
+        "gender": gender,
+        "phone_number": phoneNumber,
+        "department": department,
+        "faculty": faculty,
+        "matric_no": matricNo,
+        "user": user?.toJson(),
+        "institution": institution?.toJson(),
+      };
 }
 
 class User {
@@ -100,16 +104,18 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    username: json["username"],
-    email: json["email"],
-    roles: json["roles"] == null ? [] : List<String>.from(json["roles"]!.map((x) => x)),
-  );
+        id: json["id"],
+        username: json["username"],
+        email: json["email"],
+        roles: json["roles"] == null
+            ? []
+            : List<String>.from(json["roles"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "username": username,
-    "email": email,
-    "roles": roles == null ? [] : List<dynamic>.from(roles!.map((x) => x)),
-  };
+        "id": id,
+        "username": username,
+        "email": email,
+        "roles": roles == null ? [] : List<dynamic>.from(roles!.map((x) => x)),
+      };
 }

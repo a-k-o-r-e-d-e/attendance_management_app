@@ -57,4 +57,3 @@ class UpcomingClassModel {
         "base": base?.toJson(),
       };
 }
-

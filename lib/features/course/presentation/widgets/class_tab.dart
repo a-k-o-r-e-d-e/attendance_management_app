@@ -52,8 +52,7 @@ class ClassTab extends ConsumerWidget {
                     ),
                     verticalSpace(32),
                     const CustomText(
-                      title:
-                          "No class has been created for this course yet.",
+                      title: "No class has been created for this course yet.",
                       size: 20,
                       weight: FontWeight.w400,
                       textAlign: TextAlign.center,
