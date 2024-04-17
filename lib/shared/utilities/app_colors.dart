@@ -17,6 +17,7 @@ class AppColors {
   static const Color appLight20 = Color(0xFFF2F2F8);
   static const Color appLight100 = Color(0xFFA5A8C0);
   static const Color appDark700 = Color(0xFF1B1B28);
+  static const Color appDark500 = Color(0xFF373B4D);
   static const Color placeHolder = Color(0xFFB3B6CB);
   static const Color medium200 = Color(0xFF868EA3);
   static const Color medium300 = Color(0xFF616B7C);
