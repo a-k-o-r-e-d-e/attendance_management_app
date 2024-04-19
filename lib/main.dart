@@ -66,7 +66,6 @@ Future<void> firebaseInit() async {
           channel, notification, android, flutterLocalNotificationsPlugin);
     }
   });
-  final fcmToken = await fcmService.fetchAndSaveFcmToken();
   fcmService.setAutoInitEnabled();
   bool? notificationPermission = await container
       .read(savedInfoServiceMethodsProvider)
@@ -76,7 +75,6 @@ Future<void> firebaseInit() async {
   notificationPermission == true
       ? null
       : await fcmService.requestPermission(flutterLocalNotificationsPlugin);
-  log("FCMToken $fcmToken");
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
