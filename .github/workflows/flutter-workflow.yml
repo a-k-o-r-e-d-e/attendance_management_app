@@ -70,14 +70,18 @@ jobs:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
 
+      - name: Determine next version
+        id: next_version
+        run: echo "::set-output name=next_version::$(echo ${{ steps.last_release.outputs.tag }} | awk -F '.' '{print $1"."$2+1}')"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0  # Specify your desired tag name
-          release_name: Release v1.0  # Specify your desired release name
+          tag_name: ${{ steps.next_version.outputs.next_version }}
+          release_name: Release ${{ steps.next_version.outputs.next_version }}
           draft: false
           prerelease: false
       - name: Upload APK
