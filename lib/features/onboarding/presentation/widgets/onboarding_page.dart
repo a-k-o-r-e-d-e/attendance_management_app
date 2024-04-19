@@ -16,28 +16,28 @@ class OnBoardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      alignment: Alignment.bottomCenter,
       //mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: SizedBox(
-            //height: 274,
-            width: double.infinity,
-            child: index == 1
-                ? SvgPicture.asset("assets/svgs/onboarding-$index.svg",
-                    fit: BoxFit.scaleDown)
-                : Image.asset("assets/images/onboarding-$index.png"),
+        Container(
+          alignment: Alignment.bottomCenter,
+          width: double.infinity,
+          child: Image.asset("assets/images/onboarding-image-$index.png"),
+        ),
+        Container(
+          height: 120,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: CustomText(
+            title: description,
+            textAlign: TextAlign.center,
+            size: 20,
+            weight: FontWeight.w500,
+            overflow: TextOverflow.clip,
           ),
         ),
-        SizedBox(height: heightSizer(56, context)),
-        CustomText(
-          title: description,
-          textAlign: TextAlign.center,
-          size: 24,
-          weight: FontWeight.w500,
-          overflow: TextOverflow.clip,
-        ),
-        verticalSpace(24)
       ],
     );
   }
