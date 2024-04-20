@@ -70,13 +70,13 @@ jobs:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
 
-      - name: Get last release
-        id: last_release
-        run: echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags --max-count=1))"
-
-      - name: Determine next version
-        id: next_version
-        run: echo "::set-output name=next_version::$(echo ${{ steps.last_release.outputs.tag }} | awk -F '.' '{print "v"$1"."$2+1".0"}')"
+#      - name: Get last release
+#        id: last_release
+#        run: echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags --max-count=1))"
+#
+#      - name: Determine next version
+#        id: next_version
+#        run: echo "::set-output name=next_version::$(echo ${{ steps.last_release.outputs.tag }} | awk -F '.' '{print "v"$1"."$2+1".0"}')"
 
       - name: Create Release
         id: create_release
@@ -84,8 +84,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.next_version.outputs.next_version }}
-          release_name: Release ${{ steps.next_version.outputs.next_version }}
+          tag_name: v1.1 #${{ steps.next_version.outputs.next_version }}
+          release_name: Release v1.1 #${{ steps.next_version.outputs.next_version }}
           draft: false
           prerelease: false
       - name: Upload APK
