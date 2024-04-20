@@ -122,10 +122,10 @@ class ApiServiceImpl extends ApiService {
   ApiException handleError(DioException error) {
     String errorMessage;
     // Check if error.response is null
-    log(error.response?.data["message"]);
     if (error.response == null) {
       return ApiException("Network request failed", -1);
     }
+    log(error.response?.data["message"]);
 
     try {
       Map errorJson = error.response!.data;
