@@ -281,7 +281,7 @@ class _SingleClassScreenState extends ConsumerState<SingleClassScreen> {
                       buttonText: 'Cancel class',
                       borderRadius: 0,
                       onPressed: () {
-                        startClass();
+                        //startClass();
                       },
                     ),
                   ),
@@ -295,7 +295,12 @@ class _SingleClassScreenState extends ConsumerState<SingleClassScreen> {
             children: [
               Container(
                 height: 174,
-                color: Colors.grey,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/cover-photo-3.jpeg"),
+                      fit: BoxFit.cover),
+                  color: Colors.grey,
+                ),
               ),
               Padding(
                 padding:
@@ -722,11 +727,13 @@ class StudentEnrolled extends ConsumerWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    context
-                        .navigateTo(StudentInfoRoute(student: students[index]));
+                    context.navigateTo(StudentInfoRoute(
+                        student: students[index], index: index));
                   },
-                  leading: const CircleAvatar(
+                  leading: CircleAvatar(
                     radius: 24,
+                    backgroundImage:
+                        NetworkImage("https://i.pravatar.cc/300?img=$index"),
                   ),
                   title: CustomText(
                     title:

@@ -104,8 +104,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       height: 100,
                       child: Stack(
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 50,
+                            backgroundImage: NetworkImage(
+                                "https://i.pravatar.cc/300?img=${widget.user.profile?.user!.roles![0] == 'lecturer' ? 70 : 7}"),
                           ),
                           Positioned(
                             bottom: 0,

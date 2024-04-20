@@ -26,7 +26,11 @@ class ClassCard extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(4)),
+                image: const DecorationImage(
+                    image: AssetImage("assets/images/cover-photo-3.jpeg"),
+                    fit: BoxFit.cover),
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(4)),
           ),
           horizontalSpaceSmall,
           Expanded(

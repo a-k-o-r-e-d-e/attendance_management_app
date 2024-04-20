@@ -64,7 +64,7 @@ class CourseReportTab extends ConsumerWidget {
                   horizontalSpace(16),
                   Expanded(
                     child: CustomText(
-                      title: "20 classes were held so far",
+                      title: "0 classes were held so far",
                       size: widthSizer(16, context),
                       weight: FontWeight.w400,
                       color: AppColors.medium300,
@@ -80,7 +80,7 @@ class CourseReportTab extends ConsumerWidget {
                   horizontalSpace(16),
                   Expanded(
                     child: CustomText(
-                      title: "2 classes were canceled so far",
+                      title: "0 classes were canceled so far",
                       size: widthSizer(16, context),
                       weight: FontWeight.w400,
                       color: AppColors.medium300,

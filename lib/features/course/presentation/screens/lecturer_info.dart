@@ -42,6 +42,8 @@ class LecturerInfoScreen extends ConsumerWidget {
                   alignment: Alignment.center,
                   child: CircleAvatar(
                     radius: 50,
+                    backgroundImage:
+                        NetworkImage("https://i.pravatar.cc/300?img=70"),
                   ),
                 ),
                 verticalSpace(32),

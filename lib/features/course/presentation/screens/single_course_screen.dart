@@ -190,7 +190,13 @@ class _SingleCourseScreenState extends ConsumerState<SingleCourseScreen>
                       children: [
                         Container(
                           height: 174,
-                          color: Colors.grey,
+                          decoration: const BoxDecoration(
+                            color: Colors.grey,
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/cover-photo-1.jpeg"),
+                                fit: BoxFit.cover),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

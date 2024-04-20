@@ -24,7 +24,11 @@ class CourseWidget extends StatelessWidget {
           Container(
             height: 184,
             decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(4)),
+                image: const DecorationImage(
+                    image: AssetImage("assets/images/cover-photo-1.jpeg"),
+                    fit: BoxFit.cover),
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(4)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
