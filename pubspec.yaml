@@ -44,6 +44,7 @@ dependencies:
   flutter_local_notifications: ^17.0.1
   socket_io_client: ^2.0.3+1
   flutter_timer_countdown: ^1.0.7
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
