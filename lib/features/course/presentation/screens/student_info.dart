@@ -12,12 +12,10 @@ import '../../../../shared/models/user_model.dart';
 class StudentInfoScreen extends ConsumerStatefulWidget {
   final Profile student;
   final bool? attendance;
+  final int? index;
 
-  const StudentInfoScreen(
-    this.student, {
-    super.key,
-    this.attendance = false,
-  });
+  const StudentInfoScreen(this.student,
+      {super.key, this.attendance = false, this.index = 7});
 
   @override
   ConsumerState<StudentInfoScreen> createState() => _StudentInfoScreenState();
@@ -48,10 +46,12 @@ class _StudentInfoScreenState extends ConsumerState<StudentInfoScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24),
             child: Column(
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.center,
                   child: CircleAvatar(
                     radius: 50,
+                    backgroundImage: NetworkImage(
+                        "https://i.pravatar.cc/300?img=${widget.index}"),
                   ),
                 ),
                 verticalSpace(32),
