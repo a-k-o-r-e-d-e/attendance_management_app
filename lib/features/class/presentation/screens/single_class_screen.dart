@@ -727,11 +727,13 @@ class StudentEnrolled extends ConsumerWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    context
-                        .navigateTo(StudentInfoRoute(student: students[index]));
+                    context.navigateTo(StudentInfoRoute(
+                        student: students[index], index: index));
                   },
-                  leading: const CircleAvatar(
+                  leading: CircleAvatar(
                     radius: 24,
+                    backgroundImage:
+                        NetworkImage("https://i.pravatar.cc/300?img=$index"),
                   ),
                   title: CustomText(
                     title:
