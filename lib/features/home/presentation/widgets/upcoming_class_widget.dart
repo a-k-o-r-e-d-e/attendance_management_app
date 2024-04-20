@@ -14,7 +14,6 @@ class UpcomingClassWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: heightSizer(281, context),
       width: widthSizer(258, context),
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.appLight30),
@@ -26,10 +25,14 @@ class UpcomingClassWidget extends StatelessWidget {
           Container(
             height: 184,
             decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/cover-photo-3.jpeg"),
+                    fit: BoxFit.cover),
                 color: Colors.grey,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(4), topLeft: Radius.circular(4))),
           ),
+          verticalSpace(8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CustomText(
@@ -39,10 +42,12 @@ class UpcomingClassWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          verticalSpace(8),
           const Divider(
             height: 0,
             color: AppColors.appLight40,
           ),
+          verticalSpace(8),
           /*  Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

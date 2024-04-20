@@ -281,7 +281,7 @@ class _SingleClassScreenState extends ConsumerState<SingleClassScreen> {
                       buttonText: 'Cancel class',
                       borderRadius: 0,
                       onPressed: () {
-                        startClass();
+                        //startClass();
                       },
                     ),
                   ),
@@ -295,7 +295,12 @@ class _SingleClassScreenState extends ConsumerState<SingleClassScreen> {
             children: [
               Container(
                 height: 174,
-                color: Colors.grey,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/cover-photo-3.jpeg"),
+                      fit: BoxFit.cover),
+                  color: Colors.grey,
+                ),
               ),
               Padding(
                 padding:
