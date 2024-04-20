@@ -163,6 +163,7 @@ abstract class _$AppRouter extends RootStackRouter {
           args.student,
           key: args.key,
           attendance: args.attendance,
+          index: args.index,
         ),
       );
     },
@@ -626,6 +627,7 @@ class StudentInfoRoute extends PageRouteInfo<StudentInfoRouteArgs> {
     required Profile student,
     Key? key,
     bool? attendance = false,
+    int? index = 7,
     List<PageRouteInfo>? children,
   }) : super(
           StudentInfoRoute.name,
@@ -633,6 +635,7 @@ class StudentInfoRoute extends PageRouteInfo<StudentInfoRouteArgs> {
             student: student,
             key: key,
             attendance: attendance,
+            index: index,
           ),
           initialChildren: children,
         );
@@ -648,6 +651,7 @@ class StudentInfoRouteArgs {
     required this.student,
     this.key,
     this.attendance = false,
+    this.index = 7,
   });
 
   final Profile student;
@@ -656,9 +660,11 @@ class StudentInfoRouteArgs {
 
   final bool? attendance;
 
+  final int? index;
+
   @override
   String toString() {
-    return 'StudentInfoRouteArgs{student: $student, key: $key, attendance: $attendance}';
+    return 'StudentInfoRouteArgs{student: $student, key: $key, attendance: $attendance, index: $index}';
   }
 }
 
