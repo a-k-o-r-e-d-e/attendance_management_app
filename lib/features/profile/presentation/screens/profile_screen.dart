@@ -40,10 +40,12 @@ class ProfileScreen extends ConsumerWidget {
                       horizontal: 20.0, vertical: 24),
                   child: Column(
                     children: [
-                      const Align(
+                      Align(
                         alignment: Alignment.center,
                         child: CircleAvatar(
                           radius: 36,
+                          backgroundImage: NetworkImage(
+                              "https://i.pravatar.cc/300?img=${user.profile?.user!.roles![0] == 'lecturer' ? 70 : 7}"),
                         ),
                       ),
                       verticalSpace(20),
