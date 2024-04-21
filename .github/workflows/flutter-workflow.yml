@@ -84,8 +84,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.1 #${{ steps.next_version.outputs.next_version }}
-          release_name: Release v1.1 #${{ steps.next_version.outputs.next_version }}
+          tag_name: v1.2 #${{ steps.next_version.outputs.next_version }}
+          release_name: Release v1.2 #${{ steps.next_version.outputs.next_version }}
           draft: false
           prerelease: false
       - name: Upload APK

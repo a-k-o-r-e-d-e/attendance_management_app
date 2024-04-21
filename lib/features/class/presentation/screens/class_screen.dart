@@ -62,6 +62,7 @@ class ClassScreen extends ConsumerWidget {
           body: RefreshIndicator(
             onRefresh: refresh,
             child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -130,9 +131,33 @@ class ClassScreen extends ConsumerWidget {
                                             classInstance: value[index].base!,
                                             classID: value[index].id!));
                                       },
-                                      child: UpcomingClassWidget(
-                                        model: value[index].base!,
-                                      ),
+                                      child: Stack(children: [
+                                        UpcomingClassWidget(
+                                          model: value[index].base!,
+                                        ),
+                                        Visibility(
+                                          visible:
+                                              value[index].status == "ongoing",
+                                          child: Positioned(
+                                            right: 8,
+                                            top: 8,
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 4,
+                                                      vertical: 2),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.appGreen,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              child: const CustomText(
+                                                title: "Ongoing",
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ]),
                                     );
                                   },
                                   separatorBuilder: (ctx, idx) =>

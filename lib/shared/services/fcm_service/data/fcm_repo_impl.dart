@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:attendance_management_app/shared/services/saved_info_service/domain/repository/saved_info_repo.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../../utilities/app_strings.dart';
 import '../domain/repository/fcm_service_repo.dart';
@@ -65,16 +64,6 @@ class FcmServiceImpl extends FcmService {
   }
 
   @override
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    if (kDebugMode) {
-      print("Handling a background message: ${message.messageId}");
-      print('Message data: ${message.data}');
-      print('Message notification: ${message.notification?.title}');
-      print('Message notification: ${message.notification?.body}');
-    }
-  }
-
-  @override
   Future<void> createChannel(AndroidNotificationChannel channel,
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     await flutterLocalNotificationsPlugin
@@ -102,5 +91,6 @@ class FcmServiceImpl extends FcmService {
             // other properties...
           ),
         ));
+
   }
 }
