@@ -8,7 +8,8 @@ import '../../../../shared/models/base_model.dart';
 import '../../../../shared/models/institution_model.dart';
 import '../../../../shared/models/user_model.dart';
 
-JoinClassModel joinClassModelFromJson(String str) => JoinClassModel.fromJson(json.decode(str));
+JoinClassModel joinClassModelFromJson(String str) =>
+    JoinClassModel.fromJson(json.decode(str));
 
 String joinClassModelToJson(JoinClassModel data) => json.encode(data.toJson());
 
@@ -28,20 +29,29 @@ class JoinClassModel {
   });
 
   factory JoinClassModel.fromJson(Map<String, dynamic> json) => JoinClassModel(
-    id: json["id"],
-    currentlyTakingAttendance: json["currently_taking_attendance"],
-    classInstance: json["class_instance"] == null ? null : ClassInstance.fromJson(json["class_instance"]),
-    presentEnrolledStudents: json["present_enrolled_students"] == null ? [] : List<PresentEnrolledStudent>.from(json["present_enrolled_students"]!.map((x) => PresentEnrolledStudent.fromJson(x))),
-    countOfEnrolledStudents: json["count_of_enrolled_students"],
-  );
+        id: json["id"],
+        currentlyTakingAttendance: json["currently_taking_attendance"],
+        classInstance: json["class_instance"] == null
+            ? null
+            : ClassInstance.fromJson(json["class_instance"]),
+        presentEnrolledStudents: json["present_enrolled_students"] == null
+            ? []
+            : List<PresentEnrolledStudent>.from(
+                json["present_enrolled_students"]!
+                    .map((x) => PresentEnrolledStudent.fromJson(x))),
+        countOfEnrolledStudents: json["count_of_enrolled_students"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "currently_taking_attendance": currentlyTakingAttendance,
-    "class_instance": classInstance?.toJson(),
-    "present_enrolled_students": presentEnrolledStudents == null ? [] : List<dynamic>.from(presentEnrolledStudents!.map((x) => x.toJson())),
-    "count_of_enrolled_students": countOfEnrolledStudents,
-  };
+        "id": id,
+        "currently_taking_attendance": currentlyTakingAttendance,
+        "class_instance": classInstance?.toJson(),
+        "present_enrolled_students": presentEnrolledStudents == null
+            ? []
+            : List<dynamic>.from(
+                presentEnrolledStudents!.map((x) => x.toJson())),
+        "count_of_enrolled_students": countOfEnrolledStudents,
+      };
 }
 
 class ClassInstance {
@@ -116,32 +126,34 @@ class Student {
   });
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
-    id: json["id"],
-    title: json["title"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    gender: json["gender"],
-    phoneNumber: json["phone_number"],
-    department: json["department"],
-    faculty: json["faculty"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
-    matricNo: json["matric_no"],
-  );
+        id: json["id"],
+        title: json["title"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        gender: json["gender"],
+        phoneNumber: json["phone_number"],
+        department: json["department"],
+        faculty: json["faculty"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        institution: json["institution"] == null
+            ? null
+            : Institution.fromJson(json["institution"]),
+        matricNo: json["matric_no"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "first_name": firstName,
-    "last_name": lastName,
-    "gender": gender,
-    "phone_number": phoneNumber,
-    "department": department,
-    "faculty": faculty,
-    "user": user?.toJson(),
-    "institution": institution?.toJson(),
-    "matric_no": matricNo,
-  };
+        "id": id,
+        "title": title,
+        "first_name": firstName,
+        "last_name": lastName,
+        "gender": gender,
+        "phone_number": phoneNumber,
+        "department": department,
+        "faculty": faculty,
+        "user": user?.toJson(),
+        "institution": institution?.toJson(),
+        "matric_no": matricNo,
+      };
 }
 
 class PresentEnrolledStudent {
@@ -157,17 +169,19 @@ class PresentEnrolledStudent {
     this.student,
   });
 
-  factory PresentEnrolledStudent.fromJson(Map<String, dynamic> json) => PresentEnrolledStudent(
-    id: json["id"],
-    studentId: json["studentId"],
-    courseId: json["courseId"],
-    student: json["student"] == null ? null : Student.fromJson(json["student"]),
-  );
+  factory PresentEnrolledStudent.fromJson(Map<String, dynamic> json) =>
+      PresentEnrolledStudent(
+        id: json["id"],
+        studentId: json["studentId"],
+        courseId: json["courseId"],
+        student:
+            json["student"] == null ? null : Student.fromJson(json["student"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "studentId": studentId,
-    "courseId": courseId,
-    "student": student?.toJson(),
-  };
+        "id": id,
+        "studentId": studentId,
+        "courseId": courseId,
+        "student": student?.toJson(),
+      };
 }

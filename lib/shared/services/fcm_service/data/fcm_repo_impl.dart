@@ -91,6 +91,5 @@ class FcmServiceImpl extends FcmService {
             // other properties...
           ),
         ));
-
   }
 }
