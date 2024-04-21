@@ -14,7 +14,6 @@ class UpcomingClassWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: widthSizer(258, context),
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.appLight30),
           borderRadius: BorderRadius.circular(8)),
