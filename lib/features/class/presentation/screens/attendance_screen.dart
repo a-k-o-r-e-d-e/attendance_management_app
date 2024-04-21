@@ -37,7 +37,7 @@ class AttendanceScreen extends ConsumerWidget {
           titleColor: Colors.white,
           prefixIcon: GestureDetector(
               onTap: () {
-                context.back();
+                context.router.pop();
               },
               child: const Icon(
                 Icons.keyboard_arrow_left_rounded,
@@ -52,7 +52,7 @@ class AttendanceScreen extends ConsumerWidget {
             buttonText: 'Stop taking attendance',
             borderRadius: 0,
             onPressed: () {
-              context.back();
+              context.router.pop();
             },
           ),
         ),

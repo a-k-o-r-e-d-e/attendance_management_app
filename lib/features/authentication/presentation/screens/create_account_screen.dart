@@ -124,7 +124,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
             : 'Create Student account',
         prefixIcon: GestureDetector(
           onTap: () {
-            context.back();
+            context.router.pop();
           },
           child: const Icon(
             Icons.keyboard_arrow_left_rounded,

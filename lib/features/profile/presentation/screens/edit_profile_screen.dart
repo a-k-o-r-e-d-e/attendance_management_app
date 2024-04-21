@@ -79,7 +79,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       appBar: CustomAppBar(
         prefixIcon: GestureDetector(
             onTap: () {
-              context.back();
+              context.router.pop();
             },
             child: const Icon(Icons.keyboard_arrow_left_rounded)),
         centerTitle: true,

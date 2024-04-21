@@ -122,7 +122,7 @@ class _SingleCourseScreenState extends ConsumerState<SingleCourseScreen>
             title: widget.course.title!,
             prefixIcon: GestureDetector(
                 onTap: () {
-                  context.back();
+                  context.router.pop();
                 },
                 child: const Icon(Icons.keyboard_arrow_left_rounded)),
             suffixIcon: appUser == "lecturer"
