@@ -1,3 +1,1 @@
-enum AttendanceState{
-  none, unMarked, marked
-}
+enum AttendanceState { none, unMarked, marked }
