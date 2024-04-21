@@ -21,6 +21,7 @@ class LoadingDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Disable back button while dialog is in view
     return Dialog(
       surfaceTintColor: Colors.transparent,
       shadowColor: Colors.transparent,
