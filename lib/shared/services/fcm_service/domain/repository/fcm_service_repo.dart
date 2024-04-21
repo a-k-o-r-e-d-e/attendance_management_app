@@ -9,8 +9,6 @@ abstract class FcmService {
   Future<bool> requestPermission(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin);
 
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message);
-
   Future<void> createChannel(AndroidNotificationChannel channel,
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin);
 
