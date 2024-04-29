@@ -10,7 +10,7 @@ class ToastService {
   static void success(context, String msg, {int? seconds}) {
     toastification.show(
       context: context,
-      backgroundColor: AppColors.appOrange,
+      backgroundColor: AppColors.appGreen,
       title: CustomText(
         title: msg,
         color: Colors.white,

@@ -31,7 +31,7 @@ class Validator {
       return 'Password is required.';
     }
     if (!regex.hasMatch(password)) {
-      return 'Enter valid password of length 8 and contains uppercase, digit and special character';
+      return 'Enter valid password of length 8 and contains uppercase, digit and number';
     }
 
     // You can add more specific password validation rules here

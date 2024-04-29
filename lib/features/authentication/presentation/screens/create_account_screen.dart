@@ -107,6 +107,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
         ToastService.success(
             context, "account created succesfully, login to continue!");
+        context.router.replaceNamed("/login");
+
         //print(response);
       } on ErrorResponse catch (exception, _) {
         context.router.pop();
