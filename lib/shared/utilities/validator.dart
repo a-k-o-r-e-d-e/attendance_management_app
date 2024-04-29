@@ -27,7 +27,7 @@ class Validator {
 
   static String? validatePassword(String? password) {
     RegExp regex = RegExp(
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,16}$');
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$');
     if (password == null || password.isEmpty) {
       return 'Password is required.';
     }
